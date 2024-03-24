@@ -1,0 +1,77 @@
+@import './Variables'
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap')
+
+@font-face
+    font-family: 'Salad Chilli'
+    src: url(./fonts/Salad-Chilli.otf)
+
+@mixin flexbox($direction, $justify, $align)
+    display: flex
+    flex-direction: $direction
+    justify-content: $justify
+    align-items: $align
+
+@mixin boxShadowGradient($background-color, $border-size, $color-gradient-top, $color-gradient-bottom)
+    border: $border-size solid transparent
+    border-radius: 10px
+    background-image: linear-gradient($background-color, $background-color), linear-gradient(to bottom, $color-gradient-top, $color-gradient-bottom)
+    background-origin: border-box
+    background-clip: content-box, border-box
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05)
+
+@mixin margin-padding()
+    margin: 0
+    padding: 0
+
+@mixin fontHandwrite($color, $font-size)
+    font-family: 'Salad Chilli'
+    font-size: $font-size
+    font-style: normal
+    font-weight: normal
+    color: $color
+
+@mixin fontGrotesqueLight($color, $font-size)
+    font-family: "Bricolage Grotesque", sans-serif
+    font-size: $font-size
+    font-weight: 200
+    color: $color
+
+@mixin fontGrotesqueNormal($color, $font-size)
+    font-family: "Bricolage Grotesque", sans-serif
+    font-size: $font-size
+    font-weight: 400
+    color: $color
+
+@mixin fontGrotesqueSemibold($color, $font-size)
+    font-family: "Bricolage Grotesque", sans-serif
+    font-size: $font-size
+    font-weight: 600
+    color: $color
+
+@mixin fontGrotesqueBold($color, $font-size)
+    font-family: "Bricolage Grotesque", sans-serif
+    font-size: $font-size
+    font-weight: 700
+    color: $color
+
+@mixin fontGrotesqueBolder($color, $font-size)
+    font-family: "Bricolage Grotesque", sans-serif
+    font-size: $font-size
+    font-weight: 800
+    color: $color
+
+@mixin inputFormat()
+    width: 100%
+    padding: 5px
+    border: 1px solid $secondaryColor
+    border-radius: 7px
+    box-sizing: border-box
+    margin: 5px 0px 5px 0px
+
+@mixin buttonFormat($background-color)
+    width: 100%
+    padding: 5px
+    background-color: $background-color
+    border-radius: 7px
+    border: none
+    cursor: pointer

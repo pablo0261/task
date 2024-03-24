@@ -1,0 +1,131 @@
+@use '../../style/Mixins'
+@import '../../style/Variables'
+
+.background
+    @include Mixins.flexbox(column, center, center)
+    background: radial-gradient(rgba(0, 0, 78, 0.5) 5%, rgba(255, 255, 255, 0) 5%)
+    background-size: 35px 35px
+    width: 100%
+    height: fit-content
+
+    .marginContainer
+        
+        width: 100vw
+        height: 100vh
+        @include Mixins.flexbox(column, center, center)
+
+        .logoWrapper
+            width: 100%
+            text-align: left
+
+            .logo
+                color: white
+                @include Mixins.fontGrotesqueBolder($secondaryColor, 30px)
+                margin: 20px 0px 0px 0px
+
+        .quoteWrapper
+            width: 100%
+            @include Mixins.flexbox(column, center, center)
+
+            .quote
+                @include Mixins.fontHandwrite($secondaryColor, 50px)
+                text-align: center
+                margin: 30px 0px 0px 0px
+
+                .strong
+                    color: $accentColor
+
+            .slogan
+                @include Mixins.fontGrotesqueNormal($secondaryColor, 20px)
+                text-align: center
+                @include Mixins.margin-padding()
+
+        .logInWrapper
+            width: 100%
+            flex-grow: 1
+            
+            @include Mixins.flexbox(column, center, center)
+
+            .form
+                width: 30vw
+                min-width: 350px
+                max-width: 450px
+                height: fit-content
+                @include Mixins.flexbox(column, center, center)
+                @include Mixins.boxShadowGradient($primaryColor, 1px, $accentColor, $primaryColor)
+                margin: 0, auto
+                
+                .titleForm
+                    @include Mixins.fontGrotesqueBold($secondaryColor, 25px)
+
+                .formik
+                    width: 80%
+                    @include Mixins.flexbox(column, center, flex-start)
+                    gap: 10px
+
+                    .submitBtn
+                        @include Mixins.buttonFormat($accentColor)
+                        @include Mixins.fontGrotesqueSemibold($secondaryColor, 20px)
+                        transition: .2s
+
+                    .submitBtn:hover
+                        transform: scale(1.02)
+
+                .separator
+                    width: 80%
+                    margin: 15px 0px 15px 0px
+                    @include Mixins.flexbox(row, space-between, center)
+
+                    .line
+                        width: 45%
+                        height: 1px
+                        background-color: $secondaryColor
+
+                    .letter
+                        @include Mixins.fontGrotesqueNormal($secondaryColor, 20px)
+
+                .socialApps
+                    width: 80%
+                    @include Mixins.flexbox(row, center, center)
+                    margin-bottom: 30px
+
+                    .google
+                        width: 47%
+                        padding: 5px
+                        text-align: center
+                        border-radius: 7px
+                        box-sizing: border-box
+                        background-color: #4183F3
+                        @include Mixins.fontGrotesqueSemibold($primaryColor, 20px)
+                    
+                    .googleButton
+                        width: 100%
+                        padding: 5px
+                        text-align: center
+                        border-radius: 7px
+                        box-sizing: border-box
+                        background-color: #4183F3
+                        @include Mixins.fontGrotesqueSemibold($primaryColor, 20px)
+
+            .questionWrapper
+                width: 30%
+
+                .question
+                    @include Mixins.fontGrotesqueNormal($secondaryColor, 16px)
+                    margin-top: 20px
+
+                    .link
+                        @include Mixins.fontGrotesqueSemibold($secondaryColor, 16px)
+                        text-decoration: underline
+                        text-decoration-color: transparent
+                        text-decoration-thickness: 2px
+                        transition: .1s
+
+                    .link:hover
+                        text-decoration: underline
+                        text-decoration-color: $accentColor
+                        text-decoration-thickness: 2px
+
+        .footerWrapper
+            width: 100%
+            @include Mixins.flexbox(row, flex-start, center)

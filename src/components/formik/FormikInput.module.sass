@@ -1,0 +1,26 @@
+@use '../../style/Mixins'
+@import '../../style/Variables'
+
+.wrapper
+    width: 100%
+    height: fit-content
+
+    .label
+        width: 100%
+        @include Mixins.fontGrotesqueNormal($secondaryColor, 20px)
+
+    .input
+        @include Mixins.fontGrotesqueNormal($secondaryColor, 15px)
+        @include Mixins.inputFormat()
+
+    .input:focus
+        outline: none
+        border: 2px solid $accentColor
+
+    .error
+        @include Mixins.fontGrotesqueNormal($redColor, 15px)
+        @include Mixins.margin-padding()
+
+    .valid
+        @include Mixins.fontGrotesqueNormal($greenColor, 15px)
+        @include Mixins.margin-padding()

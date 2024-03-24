@@ -1,0 +1,21 @@
+@use '../../style/Mixins'
+@import '../../style/Variables'
+
+.background
+    @include Mixins.flexbox(column, center, center)
+    background: radial-gradient(rgba(0, 0, 78, 0.5) 5%, rgba(255, 255, 255, 0) 5%)
+    background-size: 35px 35px
+    width: 100%
+    height: fit-content
+    margin: 0, auto
+
+    .marginContainer
+        width: 95%
+        height: 100vh
+        @include Mixins.flexbox(column, center, center)
+
+        .loading
+            width: 10vw
+            margin: auto
+
+       
