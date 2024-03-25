@@ -2,14 +2,8 @@ import { useField } from 'formik';
 import style from './FormikInput.module.sass';
 import PropTypes from 'prop-types'; 
 
-function FormikInput({ name, label, ...props }) {
+function FormikInput({ name, label, securetextentry, ...props }) {
     const [field, meta] = useField(name);
-
-    FormikInput.propTypes = {
-        name: PropTypes.string.isRequired, 
-        label: PropTypes.string.isRequired, 
-        securetextentry: PropTypes.bool,
-    };
 
     return (
         <div className={style.wrapper}>
@@ -18,7 +12,7 @@ function FormikInput({ name, label, ...props }) {
             </label>
             <input
                 id={name}
-                type={props.securetextentry === 'true' ? 'password' : 'text'}
+                type={securetextentry ? 'password' : 'text'}
                 {...field}
                 {...props}
                 className={`${style.input} ${meta.touched && meta.error && style.error}`}
@@ -32,5 +26,11 @@ function FormikInput({ name, label, ...props }) {
         </div>
     );
 }
+
+FormikInput.propTypes = {
+    name: PropTypes.string.isRequired, 
+    label: PropTypes.string.isRequired, 
+    securetextentry: PropTypes.oneOfType([PropTypes.bool]),
+};
 
 export default FormikInput;

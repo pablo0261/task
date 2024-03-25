@@ -1,7 +1,7 @@
 const PATHROUTES = {
     landing: "/",
-    logIn: "/logIn",
-    signIn: "/signIn",
+    logIn: "/login",
+    signIn: "/signin",
     home: "/home",
 }
 
