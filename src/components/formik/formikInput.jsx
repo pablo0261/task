@@ -30,7 +30,7 @@ function FormikInput({ name, label, securetextentry, ...props }) {
 FormikInput.propTypes = {
     name: PropTypes.string.isRequired, 
     label: PropTypes.string.isRequired, 
-    securetextentry: PropTypes.oneOfType([PropTypes.bool]),
+    securetextentry: PropTypes.oneOfType([PropTypes.any]),
 };
 
 export default FormikInput;

@@ -7,13 +7,17 @@ import style from "./LogIn.module.sass";
 import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const initialValues = {
   email: "",
   password: "",
+  rememberMe: false, 
 };
 
 function LogIn() {
+  const [rememberMe, setRememberMe] = useState(false);
+
   const handleLogin = async (values) => {
     try {
       // Envía los datos de inicio de sesión al servidor
@@ -25,13 +29,13 @@ function LogIn() {
           text: "Usuario no Registrado.",
         });
         console.log("Token recibido del servidor:", response.data.token);
-        // Aquí puedes manejar la respuesta del servidor, como guardar el token en el almacenamiento local o redirigir a otra página
-      }
-      console.log("response", response);
-
-      if (response.status === 200) {
-        // El servidor ha validado las credenciales y ha respondido con un token JWT
-        console.log("Token recibido del servidor:", response.data.token);
+        if (values.rememberMe) {
+          // Si el usuario desea recordar sus credenciales, las almacenamos en localStorage
+          localStorage.setItem("rememberedCredentials", JSON.stringify(values));
+        } else {
+          // Si no, limpiamos cualquier credencial previamente recordada
+          localStorage.removeItem("rememberedCredentials");
+        }
         // Aquí puedes manejar la respuesta del servidor, como guardar el token en el almacenamiento local o redirigir a otra página
       } else {
         // Maneja errores de inicio de sesión
@@ -104,11 +108,11 @@ function LogIn() {
         </div>
         <div className={style.quoteWrapper}>
           <h2 className={style.quote}>
-            “Tu inventario, tu <span className={style.strong}>control</span>{" "}
+            “Tu agenda, tu <span className={style.strong}>control</span>{" "}
             total”
           </h2>
           <h3 className={style.slogan}>
-            Simplificando la gestión de stock para tu éxito.
+            Simplificando la gestión de Tareas.
           </h3>
         </div>
         <div className={style.logInWrapper}>
@@ -132,6 +136,17 @@ function LogIn() {
                       label="Contraseña"
                       securetextentry="true"
                     ></FormikInput>
+                    <div className={style.rememberMe}>
+                      <label>
+                        <input
+                          type="checkbox"
+                          name="rememberMe"
+                          checked={rememberMe}
+                          onChange={(e) => setRememberMe(e.target.checked)}
+                        />
+                        <span className={style.rememberMeText}>Recordar mis datos</span>
+                      </label>
+                    </div>
                     <button type="submit" className={style.submitBtn}>
                       Ingresar
                     </button>

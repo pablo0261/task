@@ -63,6 +63,15 @@
                     @include Mixins.flexbox(column, center, flex-start)
                     gap: 10px
 
+                    .rememberMe
+                        display: flex
+                        color: $secondaryColor
+                        margin-left: 5px
+
+                    .rememberMeText
+                        font-size: 16px
+                        margin-left: 5px
+                        
                     .submitBtn
                         @include Mixins.buttonFormat($accentColor)
                         @include Mixins.fontGrotesqueSemibold($secondaryColor, 20px)
