@@ -2,7 +2,8 @@ const PATHROUTES = {
     landing: "/",
     logIn: "/login",
     signIn: "/signin",
-    home: "/home",
+    myTasks: "/myTasks",
+    tasks: "/tasks",
 }
 
 export default PATHROUTES

@@ -1,5 +1,5 @@
 import { Formik, Form } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import FormikInput from "../../components/formik/formikInput.jsx";
 import loginValidationSchema from "./loginValidation.js";
 import helpers from "../../helpers/routesFront.js";
@@ -12,47 +12,49 @@ import { useState } from "react";
 const initialValues = {
   email: "",
   password: "",
-  rememberMe: false, 
+  rememberMe: false,
 };
 
 function LogIn() {
+  const Navigate =  useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleLogin = async (values) => {
     try {
       // Envía los datos de inicio de sesión al servidor
       const response = await axios.post("http://localhost:3000/login", values);
-      if (response.status === 404) {
-        Swal.fire({
-          icon: "alert",
-          title: "Error",
-          text: "Usuario no Registrado.",
-        });
-        console.log("Token recibido del servidor:", response.data.token);
+
+      if (response.status === 200) {
+        const token = response.data.token;
+        console.log("Token recibido del servidor:", token);
+        
+        // Verificar si el usuario seleccionó recordar credenciales
         if (values.rememberMe) {
-          // Si el usuario desea recordar sus credenciales, las almacenamos en localStorage
-          localStorage.setItem("rememberedCredentials", JSON.stringify(values));
-        } else {
-          // Si no, limpiamos cualquier credencial previamente recordada
-          localStorage.removeItem("rememberedCredentials");
+          // Si el usuario desea recordar sus credenciales, guardamos el token en localStorage
+          localStorage.setItem("token", token);
         }
-        // Aquí puedes manejar la respuesta del servidor, como guardar el token en el almacenamiento local o redirigir a otra página
+        
+        // Redirigir al usuario a la página de inicio
+        Navigate("/myTask"); // Ajusta la ruta según tu configuración
       } else {
-        // Maneja errores de inicio de sesión
-        console.error(
-          "Error de inicio de sesión en el servidor:",
-          response.statusText
-        );
+        // Manejar errores de inicio de sesión
+        console.error("Error de inicio de sesión en el servidor:", response.statusText);
+        
+        // Mostrar el mensaje de error proporcionado por el servidor
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.error || "Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.",
+        });
       }
     } catch (error) {
-      console.error(
-        "Error al enviar los datos de inicio de sesión al servidor:",
-        error
-      );
+      console.error("Error al enviar los datos de inicio de sesión al servidor:", error);
+      
+      // Mostrar el mensaje de error
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Usuario o contraseña incorrectos.",
+        text: "Ocurrió un error al enviar los datos de inicio de sesión al servidor. Por favor, inténtalo de nuevo más tarde.",
       });
     }
   };
@@ -74,16 +76,19 @@ function LogIn() {
         // Aquí puedes manejar la respuesta del servidor, como guardar el token en el almacenamiento local o redirigir a otra página
       } else {
         // Maneja errores de inicio de sesión con Google
-        console.error(
-          "Error de inicio de sesión con Google en el servidor:",
-          response.statusText
-        );
+        console.error("Error de inicio de sesión con Google en el servidor:", response.statusText);
+        
+        // Mostrar el mensaje de error proporcionado por el servidor
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: response.data.error || "Ocurrió un error al iniciar sesión con Google. Por favor, inténtalo de nuevo más tarde.",
+        });
       }
     } catch (error) {
-      console.error(
-        "Error al enviar el código de autorización al servidor:",
-        error
-      );
+      console.error("Error al enviar el código de autorización al servidor:", error);
+      
+      // Mostrar el mensaje de error
       Swal.fire({
         icon: "error",
         title: "Error",
