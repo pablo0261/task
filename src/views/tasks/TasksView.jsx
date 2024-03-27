@@ -12,6 +12,7 @@ const TasksView = () => {
     axios.get('http://localhost:3000/tasks')
       .then((response) => {
         setTasks(response.data);
+        console.log("response.data", response.data);
       })
       .catch((error) => {
         console.error('Error al obtener las tareas:', error);

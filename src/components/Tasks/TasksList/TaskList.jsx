@@ -8,7 +8,7 @@ const TaskList = ({ tasks }) => {
         <h2>Lista de Tareas</h2>
         <ul>
         {tasks.map(task => (
-          <TaskItem key={task.id} task={task} />
+          <TaskItem key={task.id} task={task} onDelete={onDelete} onUpdateStatus={onUpdateStatus} />
         ))}
       </ul>
       </div>
