@@ -35,7 +35,7 @@ function LogIn() {
         }
         
         // Redirigir al usuario a la página de inicio
-        Navigate("/myTask"); // Ajusta la ruta según tu configuración
+        Navigate("/myTasks"); // Ajusta la ruta según tu configuración
       } else {
         // Manejar errores de inicio de sesión
         console.error("Error de inicio de sesión en el servidor:", response.statusText);

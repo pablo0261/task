@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types';
-import TaskItem from '../TasksItem/TaskItem';
-import './TaskList.module.sass';
+import TaskItem from '../TasksItem/TaskItem.jsx';
 
-const TaskList = ({ tasks }) => {
-      return (
-        <div>
-        <h2>Lista de Tareas</h2>
-        <ul>
+
+const TaskList = ({ tasks, onUpdateStatus, onDelete }) => {
+  return (
+    <div>
+      <h2>Lista de Tareas</h2>
+      <ul>
         {tasks.map(task => (
-          <TaskItem key={task.id} task={task} onDelete={onDelete} onUpdateStatus={onUpdateStatus} />
+          <TaskItem
+            key={task.id}
+            task={task}
+            onUpdateStatus={onUpdateStatus}
+            onDelete={onDelete}
+          />
         ))}
       </ul>
-      </div>
+    </div>
   );
 };
 
@@ -21,10 +26,12 @@ TaskList.propTypes = {
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      status: PropTypes.string.isRequired,
-      assigned_to: PropTypes.string.isRequired, // Este tipo de dato debería ser modificado según la estructura de tu base de datos
+      assigned_to: PropTypes.string.isRequired,
+      status: PropTypes.oneOf(['Pending', 'In Progress', 'Blocked', 'Completed']).isRequired
     })
   ).isRequired,
+  onUpdateStatus: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
 export default TaskList;
