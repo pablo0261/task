@@ -29,12 +29,14 @@ const TasksView = () => {
     setTasks([...tasks, newTask]);
   };
 
+ 
+
   return (
     <div>
       <h1>Todas las Tareas</h1>
       <button onClick={() => setShowForm(true)}>Crear Tarea</button>
       {showForm && <CreateTask onCreateTask={handleCreateTask} />}
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks}  />
     </div>
   );
 };

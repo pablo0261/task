@@ -6,6 +6,7 @@ import {
 
 const initialState = {
   tasks: [],
+  userTasks: []
 };
 
 const tasksReducer = (state = initialState, action) => {

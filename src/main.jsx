@@ -5,7 +5,8 @@ import { Provider } from 'react-redux';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import App from './App.jsx';
 import store from './redux/store/index.js';
-import './index.css';
+
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

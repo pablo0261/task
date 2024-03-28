@@ -1,7 +1,11 @@
+// CreateTaskForm.jsx
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from './TasksForm.module.sass'; 
+import iconClose from '../../../images/iconClose.png'
 
-const CreateTaskForm = () => {
+const CreateTaskForm = (setShowForm) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Pendiente');
@@ -9,7 +13,6 @@ const CreateTaskForm = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Aquí hacemos la solicitud GET para obtener todos los usuarios disponibles
     axios.get('http://localhost:3000/users')
       .then((response) => {
         setUsers(response.data);
@@ -21,7 +24,6 @@ const CreateTaskForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí puedes enviar los datos del formulario a la API para crear una nueva tarea
     const formData = {
       title: title,
       description: description,
@@ -31,15 +33,19 @@ const CreateTaskForm = () => {
     axios.post('http://localhost:3000/tasks', formData)
       .then((response) => {
         console.log('Tarea creada con éxito:', response.data);
-        // Aquí podrías agregar alguna lógica adicional, como limpiar el formulario o redirigir a otra página
       })
       .catch((error) => {
         console.error('Error al crear la tarea:', error);
       });
   };
 
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.TaskForm} onSubmit={handleSubmit}>
+      <img className={styles.iconClose} src={iconClose} alt={"X"} onClick={handleCloseForm} />
       <label>
         Título:
         <input
@@ -67,15 +73,15 @@ const CreateTaskForm = () => {
       <label>
         Asignado a:
         <select value={assignedTo} onChange={(e) => setAssignedTo(e.target.value)}>
-          <option value="">Selecciona un usuario</option>
+          <option value="">Responsable</option>
           {users.map((user) => (
             <option key={user.id} value={user.id}>
-              {user.name}
+              {user.username}
             </option>
           ))}
         </select>
       </label>
-      <button type="submit">Crear Tarea</button>
+      <button type="submit">Todo Listo</button>
     </form>
   );
 };

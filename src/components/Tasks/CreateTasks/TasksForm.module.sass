@@ -1,0 +1,56 @@
+@use '../../../style/Mixins'
+@import '../../../style/Variables'
+    
+.iconClose
+    display: flex
+    width: 30px
+    padding: 3px
+    cursor: pointer
+    margin-left: auto
+    border-radius: 50px
+.iconClose:hover 
+  transform: scale(1.05)
+.iconClose:active 
+  transform: scale(0.95)
+
+.TaskForm
+  display: flex
+  flex-direction: column
+  position: absolute
+  width: 40%
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  background-color: $sistemColor 
+  padding: 40px
+  border-radius: 10px
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1)
+
+
+  label
+    margin: 10px
+    display: inline-block
+    height: fit-content
+
+  input, textarea, select
+    width: 100%
+    padding: 8px
+    border: 1px solid #ccc
+    border-radius: 5px
+    margin-top: 5px
+
+  button[type="submit"]
+    background-color: $greenColor 
+    color: white
+    border: none
+    height: 45px
+    margin-top: 10px
+    border-radius: 5px
+    cursor: pointer
+    font-size: 16px
+    transition: background-color 0.5s ease
+
+    &:hover
+      background-color: darken($secondaryColor, 10%)
+    &:active
+        transform: scale(0.95)

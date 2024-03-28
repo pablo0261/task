@@ -35,7 +35,7 @@
 //           onChange={(e) => setDescription(e.target.value)}
 //         />
 //       </label>
-//       <button type="submit">Crear Tarea</button>
+//       <button type="submit">Editar Tarea</button>
 //     </form>
 //   );
 // };
