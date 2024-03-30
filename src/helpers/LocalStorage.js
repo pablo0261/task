@@ -1,6 +1,7 @@
 const StoreItem = {
-    emailUserLogged : 'emailUserLogged',
-    dataUserSignIn : 'dataUserSignIn'
+    tokenUserLogged : 'tokenlUserLogged',
+    dataUserSignIn : 'dataUserSignIn',
+    passwordUser : 'passwordUser',
 }
 
 export default StoreItem

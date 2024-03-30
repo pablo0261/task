@@ -8,6 +8,8 @@ import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import StoreItem from '../../helpers/LocalStorage.js'
+
 
 const initialValues = {
   email: "",
@@ -25,17 +27,31 @@ function LogIn() {
       const response = await axios.post("http://localhost:3000/login", values);
 
       if (response.status === 200) {
-        const token = response.data.token;
-        console.log("Token recibido del servidor:", token);
         
-        // Verificar si el usuario seleccionó recordar credenciales
-        if (values.rememberMe) {
-          // Si el usuario desea recordar sus credenciales, guardamos el token en localStorage
-          localStorage.setItem("token", token);
+        const token = response.data.token;
+        const typeAdmin = response.data.typeAdmin;
+        
+        console.log(rememberMe, "remenberMe")
+        console.log("Token recibido del servidor:", token);
+        console.log("TypeAdmin recibido del servidor:", typeAdmin);
+        
+        localStorage.setItem(StoreItem.tokenUserLogged, JSON.stringify(token));
+        localStorage.setItem(StoreItem.typeAdmin, JSON.stringify(typeAdmin));  
+        
+        if (rememberMe) {
+          const passwordUser = response.data.password;
+          const email = response.data.email;
+
+          console.log("Email y password recibida del servidor:", email, passwordUser);
+          
+          localStorage.setItem(StoreItem.passwordUser, JSON.stringify(passwordUser));  
+          localStorage.setItem(StoreItem.email, JSON.stringify(email));  
+          
+
+          console.log("values", values)
         }
         
-        // Redirigir al usuario a la página de inicio
-        Navigate("/myTasks"); // Ajusta la ruta según tu configuración
+        // Navigate("/myTasks");
       } else {
         // Manejar errores de inicio de sesión
         console.error("Error de inicio de sesión en el servidor:", response.statusText);

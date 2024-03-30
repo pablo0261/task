@@ -3,10 +3,14 @@ import axios from 'axios';
 import TaskList from '../../components/Tasks/TasksList/TaskList';
 import CreateTask from '../../components/Tasks/CreateTasks/CreatTasks';
 import Swal from 'sweetalert2';
+import StoreItem from '../../helpers/LocalStorage'
 
 const MyTasks = () => {
   const [tasks, setTasks] = useState([]);
   console.log("tasks", tasks)
+
+  const storedToken = JSON.parse(localStorage.getItem(StoreItem.tokenUserLogged));
+  console.log("Token almacenado en localStorage:", storedToken);
 
   useEffect(() => {
     axios.get('http://localhost:3000/tasks')
@@ -115,6 +119,7 @@ const MyTasks = () => {
       });
   };
 
+  console.log(localStorage)
   return (
     <div>
       <h1>Mis Tareas</h1>
