@@ -5,7 +5,7 @@ import editIcon from "../../../images/iconEdit4.png";
 import CreateTask from "../../Tasks/CreateTasks/CreatTasks";
 
 const TaskItem = ({ task, onUpdate, onDelete, onFullUpdate }) => {
-  const { task_id, title, description, assigned_to, status } = task;
+  const { task_id, title, description, assigned_username, status } = task;
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
 
@@ -49,7 +49,7 @@ const TaskItem = ({ task, onUpdate, onDelete, onFullUpdate }) => {
         </div>
         <div className={styles.assigned}>
           <strong>Assigned To:</strong>
-          <p>{assigned_to}</p>{" "}
+          <p>{assigned_username}</p>{" "}
         </div>
         <select
           className={styles.status}
@@ -81,7 +81,7 @@ TaskItem.propTypes = {
     task_id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    assigned_to: PropTypes.string.isRequired,
+    assigned_username: PropTypes.string.isRequired,
     status: PropTypes.oneOf(["Pending", "In Progress", "Blocked", "Completed"])
       .isRequired,
   }).isRequired,

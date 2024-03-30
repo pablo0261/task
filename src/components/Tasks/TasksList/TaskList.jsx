@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import TaskItem from '../TasksItem/TaskItem.jsx';
-
+import style from './TaskList.module.sass'
 
 const TaskList = ({ tasks, onDelete, onUpdate, onFullUpdate }) => {
   return (
-    <div>
-      <h2>Lista de Tareas</h2>
-      <ul>
+    <div className={style.taskList}>
+      <h2 className={style.title}>Lista de Tareas</h2>
+      <ul className={style.ulTask}>
         {tasks.map(task => (
           <TaskItem
             key={task.task_id}

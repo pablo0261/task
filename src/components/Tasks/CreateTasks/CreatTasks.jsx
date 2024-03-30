@@ -5,7 +5,7 @@ import axios from 'axios';
 import styles from './TasksForm.module.sass'; 
 import iconClose from '../../../images/iconClose.png'
 
-const CreateTaskForm = (setShowForm) => {
+const CreateTaskForm = ({setShowForm}) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Pendiente');
