@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import animationStock from "../../../utils/AnimationStock.gif";
 import style from "./Landing.module.sass";
 
-const transitionDuration = 900;
 
 const LandingView = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +18,7 @@ const LandingView = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      navigate("/LogIn");
+      navigate("/logIn");
     }
   }, [isLoading, navigate]);
 

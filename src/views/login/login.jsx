@@ -7,8 +7,9 @@ import style from "./LogIn.module.sass";
 import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StoreItem from '../../helpers/LocalStorage.js'
+import { jwtDecode } from "jwt-decode";
 
 
 const initialValues = {
@@ -18,44 +19,66 @@ const initialValues = {
 };
 
 function LogIn() {
-  const Navigate =  useNavigate();
+  const navigate =  useNavigate();
   const [rememberMe, setRememberMe] = useState(false);
+  
+  useEffect(() => {
+    const tokenStorage = localStorage.getItem('token');
+    if (tokenStorage) {
+      console.log("localStorage", localStorage)
+      try {
+        const decodedToken = jwtDecode(tokenStorage);
+        const username = decodedToken.username;
+        console.log('Usuario ya autenticado:', decodedToken.username);
+        Swal.fire({
+          icon: "success",
+          title: `¡Bienvenido de nuevo ${username}!`,
+          text: `Vamos a MyTask?`,
+          showDenyButton: true,
+          confirmButtonText: 'SI!',
+          denyButtonText: `Volver al Login`,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/myTasks");
+          } else if (result.isDenied) {
+            navigate("/login"); // Asegúrate de que esta ruta exista y esté configurada para volver al inicio de sesión
+          }
+        });
+      } catch (error) {
+        console.log('Error al decodificar el token:', error);
+      }
+    }
+  }, [navigate]);
+
+
+
 
   const handleLogin = async (values) => {
     try {
-      // Envía los datos de inicio de sesión al servidor
+       
+      console.log(values, "values")
       const response = await axios.post("http://localhost:3000/login", values);
-
+      console.log(response.status, "response.status")
       if (response.status === 200) {
-        
         const token = response.data.token;
-        const typeAdmin = response.data.typeAdmin;
-        
         console.log(rememberMe, "remenberMe")
         console.log("Token recibido del servidor:", token);
-        console.log("TypeAdmin recibido del servidor:", typeAdmin);
         
-        localStorage.setItem(StoreItem.tokenUserLogged, JSON.stringify(token));
-        localStorage.setItem(StoreItem.typeAdmin, JSON.stringify(typeAdmin));  
+        localStorage.setItem('token', token);
         
         if (rememberMe) {
           const passwordUser = response.data.password;
           const email = response.data.email;
-
+          
           console.log("Email y password recibida del servidor:", email, passwordUser);
           
           localStorage.setItem(StoreItem.passwordUser, JSON.stringify(passwordUser));  
           localStorage.setItem(StoreItem.email, JSON.stringify(email));  
-          
-
-          console.log("values", values)
         }
         
-        // Navigate("/myTasks");
+        Navigate("/myTasks");
       } else {
-        // Manejar errores de inicio de sesión
         console.error("Error de inicio de sesión en el servidor:", response.statusText);
-        
         // Mostrar el mensaje de error proporcionado por el servidor
         Swal.fire({
           icon: "error",
@@ -85,7 +108,7 @@ function LogIn() {
         redirect_uri: "your_redirect_uri",
         grant_type: "authorization_code",
       });
-
+      
       if (response.status === 200) {
         // El servidor ha validado el código y ha respondido con un token JWT
         console.log("Token recibido del servidor:", response.data.token);
@@ -112,7 +135,7 @@ function LogIn() {
       });
     }
   };
-
+  
   const onGoogleLogin = useGoogleLogin({
     onSuccess: onGoogleLoginSuccess,
     flow: "auth-code",
@@ -120,7 +143,7 @@ function LogIn() {
     cookiepolicy: "none",
     accesstype: "offline",
   });
-
+  
   return (
     <div className={style.background}>
       <div className={style.marginContainer}>

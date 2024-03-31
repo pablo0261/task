@@ -25,6 +25,7 @@ const SignIn = () => {
           "Inicio de sesión exitoso con email y contraseña:",
           response.data
         );
+        window.alert("Aqui voy al myTask")
         // Aquí puedes manejar la respuesta del servidor, como guardar el token y redirigir a la página de inicio
       }
     } catch (error) {
