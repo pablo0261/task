@@ -1,16 +1,37 @@
-import { useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import TaskList from '../../components/Tasks/TasksList/TaskList';
 import CreateTask from '../../components/Tasks/CreateTasks/CreatTasks';
+import AdminBar from '../../components/Tasks/AdminBar/AdminBar';
 import Swal from 'sweetalert2';
 import StoreItem from '../../helpers/LocalStorage'
+import { jwtDecode } from "jwt-decode";
+
+const TasksContext = createContext();
+
+export const useTasks = () => useContext(TasksContext);
 
 const MyTasks = () => {
   const [tasks, setTasks] = useState([]);
-  console.log("tasks", tasks)
+  const [showForm, setShowForm] = useState(false);
+  const [admin, setAdmin] = useState(false);
 
-  const storedToken = JSON.parse(localStorage.getItem(StoreItem.tokenUserLogged));
-  console.log("Token almacenado en localStorage:", storedToken);
+  useEffect(() => {
+    // Obtiene el token almacenado en localStorage
+    const storedToken = JSON.parse(localStorage.getItem(StoreItem.tokenUserLogged));
+    console.log("Token almacenado en localStorage:", storedToken);
+    
+    if (storedToken) {
+      // Decodifica el token para obtener los datos del usuario
+      const decodedToken = jwtDecode(storedToken);
+      console.log("Token decodificado:", decodedToken);
+      
+      // Verifica si el usuario es administrador
+      if (decodedToken.typeAdmin) {
+        setAdmin(true);
+      }
+    }
+  }, []); 
 
   useEffect(() => {
     axios.get('http://localhost:3000/tasks')
@@ -121,11 +142,15 @@ const MyTasks = () => {
 
   console.log(localStorage)
   return (
+    <TasksContext.Provider value={{ tasks,handleUpdateFullTask, handleCreateTask, handleDeleteTask, handleUpdateTask, showForm, setShowForm }}>
     <div>
       <h1>Mis Tareas</h1>
-      <CreateTask onCreateTask={handleCreateTask} /> {/* Aquí pasamos la función handleCreateTask como prop */}
-      <TaskList tasks={tasks} onDelete={handleDeleteTask} onUpdate={handleUpdateTask} onFullUpdate={handleUpdateFullTask}/>
+      {admin && <AdminBar/>}
+      {showForm &&
+      <CreateTask /> }
+      <TaskList />
     </div>
+    </TasksContext.Provider>
   );
 };
 

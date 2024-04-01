@@ -1,16 +1,27 @@
-// CreateTaskForm.jsx
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import styles from './TasksForm.module.sass'; 
-import iconClose from '../../../images/iconClose.png'
+import iconClose from '../../../images/iconClose.png';
+import { useTasks } from '../../../views/myTasks/MyTasksView';
 
-const CreateTaskForm = ({setShowForm}) => {
+const CreateTaskForm = ({ taskToEdit }) => {
+  const { handleCreateTask } = useTasks();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Pendiente');
   const [assignedTo, setAssignedTo] = useState('');
   const [users, setUsers] = useState([]);
+  const [showForm, setShowForm] = useState(true); 
+
+  useEffect(() => {
+    if (taskToEdit) {
+      setTitle(taskToEdit.title);
+      setDescription(taskToEdit.description);
+      setStatus(taskToEdit.status);
+      setAssignedTo(taskToEdit.assigned_to);
+    }
+  }, [taskToEdit]);
 
   useEffect(() => {
     axios.get('http://localhost:3000/users')
@@ -24,27 +35,22 @@ const CreateTaskForm = ({setShowForm}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formData = {
+    const newTaskData = {
       title: title,
       description: description,
       status: status,
       assigned_to: assignedTo
     };
-    axios.post('http://localhost:3000/tasks', formData)
-      .then((response) => {
-        console.log('Tarea creada con éxito:', response.data);
-      })
-      .catch((error) => {
-        console.error('Error al crear la tarea:', error);
-      });
-  };
-
-  const handleCloseForm = () => {
+    handleCreateTask(newTaskData);
     setShowForm(false);
   };
 
+  const handleCloseForm = () => {
+    setShowForm(false); 
+  };
+
   return (
-    <form className={styles.TaskForm} onSubmit={handleSubmit}>
+    <form className={styles.TaskForm} onSubmit={handleSubmit} style={{ display: showForm ? 'block' : 'none' }}>
       <img className={styles.iconClose} src={iconClose} alt={"X"} onClick={handleCloseForm} />
       <label>
         Título:
@@ -84,6 +90,10 @@ const CreateTaskForm = ({setShowForm}) => {
       <button type="submit">Todo Listo</button>
     </form>
   );
+};
+
+CreateTaskForm.propTypes = {
+  taskToEdit: PropTypes.object // Puedes ajustar el tipo de dato según la estructura de tu objeto task
 };
 
 export default CreateTaskForm;

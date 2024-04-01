@@ -1,0 +1,27 @@
+@use '../../style/Mixins'
+@import '../../style/Variables'
+
+.backWrapper
+    background: $backgroundSolid
+    display: flex
+    justify-content: space-around
+    padding: 10px
+    border-radius: 5px
+    align-content: center
+
+.ButtonCreateTask    
+    @include Mixins.buttonFormat($accentColor)
+    margin: 5px
+    
+
+.divInputs
+    width: calc(48% - 10px)
+    display: flex
+
+.Inputs
+    width: 50%
+    padding: 5px
+    border: 1px solid $secondaryColor
+    border-radius: 7px
+    box-sizing: border-box
+    margin: 10px   

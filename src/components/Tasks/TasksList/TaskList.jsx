@@ -1,19 +1,20 @@
 import PropTypes from 'prop-types';
 import TaskItem from '../TasksItem/TaskItem.jsx';
-import style from './TaskList.module.sass'
+import { useTasks } from '../../../views/myTasks/MyTasksView.jsx';
+import style from './TaskList.module.sass';
+import NabBar from '../../NabBar/NabBar.jsx';
 
-const TaskList = ({ tasks, onDelete, onUpdate, onFullUpdate }) => {
+const TaskList = () => {
+  const { tasks } = useTasks();
+
   return (
     <div className={style.taskList}>
-      <h2 className={style.title}>Lista de Tareas</h2>
+      <NabBar/>
       <ul className={style.ulTask}>
         {tasks.map(task => (
           <TaskItem
-            key={task.task_id}
+            key={task.id} 
             task={task}
-            onDelete={onDelete}
-            onUpdate={onUpdate}
-            onFullUpdate={onFullUpdate}
           />
         ))}
       </ul>
@@ -24,16 +25,13 @@ const TaskList = ({ tasks, onDelete, onUpdate, onFullUpdate }) => {
 TaskList.propTypes = {
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
-      task_id: PropTypes.number.isRequired,
+      id: PropTypes.number.isRequired, // Cambia task_id a id
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
       assigned_to: PropTypes.string.isRequired,
       status: PropTypes.oneOf(['Pending', 'In Progress', 'Blocked', 'Completed']).isRequired
     })
   ).isRequired,
-  onUpdate: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onFullUpdate: PropTypes.func.isRequired
 };
 
 export default TaskList;

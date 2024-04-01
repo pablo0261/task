@@ -76,7 +76,7 @@ function LogIn() {
           localStorage.setItem(StoreItem.email, JSON.stringify(email));  
         }
         
-        Navigate("/myTasks");
+        navigate("/myTasks");
       } else {
         console.error("Error de inicio de sesión en el servidor:", response.statusText);
         // Mostrar el mensaje de error proporcionado por el servidor
