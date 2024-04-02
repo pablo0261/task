@@ -63,6 +63,7 @@
 
   .status
     width: 10%
+    height: 40px
     padding: 8px
     border: 1px solid $primaryColor
     border-radius: 5px
@@ -70,12 +71,16 @@
     color: $secondaryColor
     font-size: 16px
     cursor: pointer
+  .status:hover
+    transform: scale(1.01)
+    box-shadow:  3px 3px 7px rgba(0, 1, 1, 0.212)
+  
 
   button
     background-color: $redColor
     color: white
     border: none
-    height: 45px
+    height: 40px
     margin-inline: 15px
     border-radius: 5px
     padding: 8px 15px
@@ -84,6 +89,8 @@
     transition: background-color 0.3s ease
 
     &:hover
-      background-color: darken($secondaryColor, 10%)
+      transform: scale(1.01)
+      background-color: darken($redColor, 10%)
+      box-shadow:  3px 3px 7px rgba(0, 1, 1, 0.212)
     &:active
       transform: scale(0.95)

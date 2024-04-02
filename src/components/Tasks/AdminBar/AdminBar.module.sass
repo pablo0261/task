@@ -1,0 +1,34 @@
+@use '../../../style/Mixins'
+@import '../../../style/Variables'
+
+.wrapped
+  display: flex   
+  justify-content: space-between 
+  align-items: center    
+  width: 100%
+  background-color: $baseColor
+  border: solid blue 2px
+
+.createButton
+   width: 100% // Asegúrate de que el botón también ocupe todo el ancho
+   background-color: $greenColor
+   color: white
+   border: none
+   height: 45px
+   margin-top: 20px // Ajusta según necesites
+   border-radius: 5px
+   cursor: pointer
+   font-size: 16px
+   transition: background-color 0.5s ease
+
+   &:hover
+      background-color: darken($secondaryColor, 10%)
+   &:active
+      transform: scale(0.95)
+
+.input
+   width: 100%
+   padding: 8px
+   border: 1px solid ($baseColor, 10% )
+   border-radius: 5px
+   margin-top: 5px

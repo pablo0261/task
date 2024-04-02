@@ -6,7 +6,7 @@ import CreateTask from "../../Tasks/CreateTasks/CreatTasks";
 import { useTasks } from "../../../views/myTasks/MyTasksView";
 
 const TaskItem = ({ task }) => {
-  const { task_id, title, description, assigned_to, status } = task;
+  const { task_id, title, description, username, status } = task;
   const { handleUpdateTask, handleDeleteTask } = useTasks();
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
@@ -50,7 +50,7 @@ const TaskItem = ({ task }) => {
       </div>
       <div className={styles.assigned}>
         <strong>Assigned To:</strong>
-        <p>{assigned_to}</p>{" "}
+        <p>{username}</p>{" "}
       </div>
       <select
         className={styles.status}
@@ -82,7 +82,7 @@ TaskItem.propTypes = {
     task_id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    assigned_to: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
     status: PropTypes.oneOf(["Pending", "In Progress", "Blocked", "Completed"])
       .isRequired,
   }).isRequired,
