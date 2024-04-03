@@ -1,6 +1,33 @@
 @use '../../../style/Mixins'
 @import '../../../style/Variables'
 
+.taskItem
+  position: relative
+  background-color: $sistemColor
+  display: flex
+  align-items: center
+  border: 1px solid $primaryColor
+  border-radius: 10px
+  padding: 10px
+  width: 98%
+  margin-bottom: 10px
+  margin-inline: 0px
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.349)
+  &:hover
+    box-shadow:  3px 3px 7px rgba(10, 10, 10, 0.705)
+    transform: scale(0.999)
+
+.containerLeft
+  width: 50%
+  min-width: 350px
+  border-right: solid $secondaryColor 3px
+
+
+.containerRight
+  display: flex
+  width: 40%
+  align-items: center
+
 .showForm
   display: flex
   position: absolute
@@ -8,14 +35,12 @@
   height: 100vw
   backdrop-filter: blur(8px)
   z-index: 9999
-  display: flex
 
 .divButton
-  display: flex
-  position: relative
+  position: absolute
+  top: 2px
+  right: 8px
   width: fit-content
-  top: -30px
-  right: 0px
   border-radius: 50px
 .divButton:hover 
   background-color: #ffd700
@@ -29,68 +54,83 @@
   padding: 3px
   cursor: pointer  
     
-.taskItem
-  background-color: $sistemColor
-  display: flex
-  justify-content: center
-  align-items: center
-  border: 1px solid $primaryColor
-  border-radius: 10px
-  padding: 10px
-  width: 98%
-  margin-bottom: 10px
+.title
+  color: $secondaryColor
+  font-size: 28px
+  margin-bottom: 5px
   margin-inline: 10px
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1)
+  width: 90%
+  height: auto
 
-  h2
-    color: $secondaryColor
-    font-size: 20px
-    margin-bottom: 5px
-    width: 20%
-    height: auto
+.description
+  color: $textColor
+  margin-left: 10px
+  margin-bottom: 5px
+  color:  rgba($textColor, .6)
+  width: 90%
+  height: auto
 
-  .description
-    color: $textColor
-    margin-bottom: 5px
-    width: 50%
-    height: auto
+.assigned  
+  color: $textColor
+  display: flex
+  margin-bottom: 5px
+  margin-inline: 30px
+  width: fit-content
+  min-width: 140px
+
+.assignedTitle
+  font-size: 24px
+  font-weight: bold
+
+.assignedUser
+  font-size: 20px
+  margin-inline: 5px
+  align-self: center  
+
+.status
+  width: 150px
+  height: 40px
+  padding: 8px
+  border: 1px solid $primaryColor
+  border-radius: 5px
+  background-color: white
+  color: $secondaryColor
+  font-size: 16px
+  cursor: pointer
+.status:hover
+  transform: scale(1.01)
+  box-shadow:  3px 3px 7px rgba(0, 1, 1, 0.212)
+
+
+.iconDelete
+  position: absolute
+  top: 2px
+  right: 50px
+  height: 30px
+  padding: 5px
+  border-radius: 50%
+  cursor: pointer
+  transition: background-color 0.3s ease
+  &:hover 
+    background-color: #ffd700
+  &:active 
+    background-color: #d4af37
+    transform: scale(0.95)
+
+@media (max-width: 860px) 
+  .taskItem 
+    display: block
+
+  .containerLeft
+    width: 90%
+    min-width: 50px
+    border-right: none
+    border-bottom: solid $secondaryColor 2px
+
+  .containerRight
+    display: block
+    width: 90%
+    align-items: center
 
   .assigned  
-    color: $textColor
-    display: block
-    margin-bottom: 5px
-    width: 10%
-
-  .status
-    width: 10%
-    height: 40px
-    padding: 8px
-    border: 1px solid $primaryColor
-    border-radius: 5px
-    background-color: white
-    color: $secondaryColor
-    font-size: 16px
-    cursor: pointer
-  .status:hover
-    transform: scale(1.01)
-    box-shadow:  3px 3px 7px rgba(0, 1, 1, 0.212)
-  
-
-  button
-    background-color: $redColor
-    color: white
-    border: none
-    height: 40px
-    margin-inline: 15px
-    border-radius: 5px
-    padding: 8px 15px
-    cursor: pointer
-    font-size: 16px
-    transition: background-color 0.3s ease
-
-    &:hover
-      transform: scale(1.01)
-      background-color: darken($redColor, 10%)
-      box-shadow:  3px 3px 7px rgba(0, 1, 1, 0.212)
-    &:active
-      transform: scale(0.95)
+    margin-inline: 10px

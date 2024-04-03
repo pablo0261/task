@@ -3,6 +3,7 @@ import axios from 'axios';
 import TaskList from '../../components/Tasks/TasksList/TaskList';
 import CreateTask from '../../components/Tasks/CreateTasks/CreatTasks';
 import AdminBar from '../../components/Tasks/AdminBar/AdminBar';
+
 import Swal from 'sweetalert2';
 import StoreItem from '../../helpers/LocalStorage'
 import { jwtDecode } from "jwt-decode";
@@ -19,12 +20,10 @@ const MyTasks = () => {
   useEffect(() => {
     // Obtiene el token almacenado en localStorage
     const storedToken = JSON.parse(localStorage.getItem(StoreItem.tokenUserLogged));
-    console.log("Token almacenado en localStorage:", storedToken);
     
     if (storedToken) {
       // Decodifica el token para obtener los datos del usuario
       const decodedToken = jwtDecode(storedToken);
-      console.log("Token decodificado:", decodedToken);
       
       // Verifica si el usuario es administrador
       if (decodedToken.typeAdmin) {
@@ -46,7 +45,7 @@ const MyTasks = () => {
           text: error.message,
         });
       });
-  }, []);
+    }, []);
 
   const handleCreateTask = async (newTaskData) => {
     try {
@@ -69,7 +68,6 @@ const MyTasks = () => {
   };
 
   const handleDeleteTask = (taskId) => {
-    console.log("taskId delete", taskId)
     axios.delete(`http://localhost:3000/tasks/${taskId}`)
       .then(() => {
         // Elimina la tarea del estado para reflejar los cambios en la UI
@@ -94,7 +92,6 @@ const MyTasks = () => {
       status: updatedTask
     };
 
-    console.log("updatedTaskData", updatedTaskData) 
     axios.put(`http://localhost:3000/tasks/${taskId}`, updatedTaskData)
       .then((response) => {
         // Actualiza la tarea en el estado para reflejar los cambios en la UI
@@ -140,7 +137,6 @@ const MyTasks = () => {
       });
   };
 
-  console.log(localStorage)
   return (
     <TasksContext.Provider value={{ tasks,handleUpdateFullTask, handleCreateTask, handleDeleteTask, handleUpdateTask, showForm, setShowForm }}>
     <div>

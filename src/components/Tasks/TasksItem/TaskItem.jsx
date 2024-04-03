@@ -4,9 +4,10 @@ import styles from "./TaskItem.module.sass";
 import editIcon from "../../../images/iconEdit4.png";
 import CreateTask from "../../Tasks/CreateTasks/CreatTasks";
 import { useTasks } from "../../../views/myTasks/MyTasksView";
+import iconoDelete from  "../../../images/iconDelete2.png"
 
 const TaskItem = ({ task }) => {
-  const { task_id, title, description, username, status } = task;
+  const { task_id, title, description, user, status } = task;
   const { handleUpdateTask, handleDeleteTask } = useTasks();
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
@@ -42,15 +43,22 @@ const TaskItem = ({ task }) => {
   };
 
   return (
-    <li key={task_id} className={styles.taskItem}>
-      <h2>{title}</h2>
+    <div key={task_id} className={styles.taskItem}>
+
+      <div className={styles.containerLeft}>
+      <h2 className={styles.title}>{title}</h2>
       <div className={styles.description}>
-        <strong>Description: </strong>
         <p>{description}</p>{" "}
       </div>
+      </div>
+
+
+      <div className={styles.containerRight}>
       <div className={styles.assigned}>
-        <strong>Assigned To:</strong>
-        <p>{username}</p>{" "}
+        <p className={styles.assignedTitle}>Assigned To:</p>
+        <p className={styles.assignedUser}>{user.username}</p>
+      </div>
+      
       </div>
       <select
         className={styles.status}
@@ -63,7 +71,7 @@ const TaskItem = ({ task }) => {
         <option value="Blocked">Blocked</option>
         <option value="Completed">Completed</option>
       </select>
-      <button onClick={() => handleDeleteTask(task_id)}>Eliminar</button>
+      <img className={styles.iconDelete} src={iconoDelete} alt={"Eliminar"} onClick={() => handleDeleteTask(task_id)}></img>
       <div className={styles.divButton}>
         <img
           className={styles.editButton}
@@ -73,7 +81,7 @@ const TaskItem = ({ task }) => {
         />
       </div>
       {showForm && <CreateTask setShowForm={setShowForm} taskToEdit={task} />}
-    </li>
+    </div>
   );
 };
 
@@ -82,7 +90,7 @@ TaskItem.propTypes = {
     task_id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired,
     status: PropTypes.oneOf(["Pending", "In Progress", "Blocked", "Completed"])
       .isRequired,
   }).isRequired,
