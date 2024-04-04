@@ -1,7 +1,6 @@
-// En AdminBar.jsx
 import { useContext } from 'react';
 import  TasksContext  from '../../../views/myTasks/MyTasksView';
-import styles from "./AdminBar.module.sass";
+import styles from './Admin.module.sass'
 
 const AdminBar = () => {
   const { showForm, setShowForm } = useContext(TasksContext);
@@ -12,7 +11,7 @@ const AdminBar = () => {
 
   return (
     <div className={styles.wrapped}>
-      <div>
+      <div className={styles.divCreateButton}> 
         <button className={styles.createButton} onClick={toggleForm}>{showForm ? 'Cerrar Formulario' : 'Crear Nueva Tarea'}</button>
       </div>
       <div>

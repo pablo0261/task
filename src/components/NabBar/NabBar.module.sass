@@ -2,16 +2,39 @@
 @import '../../style/Variables'
 
 .backWrapper
-    background: $backgroundSolid
+    background: rgba($yellowColor, 0.7)
     display: flex
     justify-content: space-around
-    padding: 10px
+    padding: 20px
     border-radius: 5px
     align-content: center
+   
 
-.ButtonCreateTask    
-    @include Mixins.buttonFormat($accentColor)
-    margin: 5px
+.divButtonCreateTask
+    display: flex
+    font-size: 20px
+    background: $primaryColor
+    padding-inline: 10px
+    color: $textColor
+    font-weight: bold
+    align-content: start
+    border: solid  $secondaryColor 3px
+    border-radius: 8px
+    cursor: pointer
+    &:hover
+        transform: scale(1.01)
+        box-shadow:  3px 3px 7px  $yellowColor
+    &:active 
+        transform: scale(0.95)   
+        
+
+.ButtonCreateTask
+    @include Mixins.buttonFormat(#d4af3700)
+    font-size: 20px
+    width: 100px
+    color: $textColor
+    font-weight: bold 
+    align-content: center
     
 
 .divInputs
@@ -24,4 +47,4 @@
     border: 1px solid $secondaryColor
     border-radius: 7px
     box-sizing: border-box
-    margin: 10px   
+    margin: 10px

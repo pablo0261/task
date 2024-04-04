@@ -8,20 +8,20 @@
   align-items: center
   border: 1px solid $primaryColor
   border-radius: 10px
-  padding: 10px
+  padding-inline: 10px
+  padding-block: 0px
   width: 98%
   margin-bottom: 10px
   margin-inline: 0px
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.349)
+  box-shadow: 0px 2px 4px $secondaryColor
   &:hover
-    box-shadow:  3px 3px 7px rgba(10, 10, 10, 0.705)
+    box-shadow:  3px 3px 7px rgba($secondaryColor, 0.705)
     transform: scale(0.999)
 
 .containerLeft
   width: 50%
   min-width: 350px
   border-right: solid $secondaryColor 3px
-
 
 .containerRight
   display: flex
@@ -43,9 +43,9 @@
   width: fit-content
   border-radius: 50px
 .divButton:hover 
-  background-color: #ffd700
+  background-color: $yellowColor
 .divButton:active 
-  background-color: #d4af37
+  background-color: rgba($yellowColor, 0.7)
   transform: scale(0.95)
 
 .editButton
@@ -90,6 +90,7 @@
 .status
   width: 150px
   height: 40px
+  margin-top: 40px
   padding: 8px
   border: 1px solid $primaryColor
   border-radius: 5px
@@ -101,7 +102,6 @@
   transform: scale(1.01)
   box-shadow:  3px 3px 7px rgba(0, 1, 1, 0.212)
 
-
 .iconDelete
   position: absolute
   top: 2px
@@ -112,7 +112,7 @@
   cursor: pointer
   transition: background-color 0.3s ease
   &:hover 
-    background-color: #ffd700
+    background-color: $yellowColor
   &:active 
     background-color: #d4af37
     transform: scale(0.95)
@@ -134,3 +134,11 @@
 
   .assigned  
     margin-inline: 10px
+    margin-bottom: 0px
+  .status
+    margin-bottom: 3px
+
+
+@media (max-width: 350px)    
+  .assigned
+    display: block  

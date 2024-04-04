@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import animationStock from "../../../utils/AnimationStock.gif";
+import animationStock from "../../../src/images/loadingGif.gif";
 import style from "./Landing.module.sass";
 
 
