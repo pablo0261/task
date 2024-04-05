@@ -5,29 +5,46 @@
     background: rgba($yellowColor, 0.7)
     display: flex
     justify-content: space-around
-    padding: 20px
+    padding: 18px
+    margin-top: 5px
     border-radius: 5px
     align-content: center
-   
+
+.divInputs
+    width: calc(48% - 10px)
+    display: flex
+
+.Inputs
+    width: 50%
+    padding: 5px
+    font-size: 18px
+    font-family:  Arial, Helvetica, sans-serif
+    height: 38px
+    border: 1px solid $secondaryColor
+    border-radius: 7px
+    box-sizing: border-box
+    margin: 10px
+    box-shadow:  3px 3px 7px  rgba($secondaryColor, 0.5)
 
 .divButtonCreateTask
     display: flex
     font-size: 20px
+    max-height: 50px
     background: $primaryColor
     padding-inline: 10px
     color: $textColor
     font-weight: bold
-    align-content: start
+    align-items: center
     border: solid  $secondaryColor 3px
     border-radius: 8px
     cursor: pointer
+    box-shadow:  3px 3px 7px  rgba($secondaryColor, 0.5)
     &:hover
-        transform: scale(1.01)
-        box-shadow:  3px 3px 7px  $yellowColor
+        transform: scale(1.03)
+        box-shadow:  3px 3px 7px  $secondaryColor
     &:active 
         transform: scale(0.95)   
         
-
 .ButtonCreateTask
     @include Mixins.buttonFormat(#d4af3700)
     font-size: 20px
@@ -37,14 +54,9 @@
     align-content: center
     
 
-.divInputs
-    width: calc(48% - 10px)
-    display: flex
-
-.Inputs
-    width: 50%
-    padding: 5px
-    border: 1px solid $secondaryColor
-    border-radius: 7px
-    box-sizing: border-box
-    margin: 10px
+@media (max-width: 860px)     
+    .divInputs
+        display: block
+    .divButtonCreateTask
+        border: solid blue 3px
+        align-items : center

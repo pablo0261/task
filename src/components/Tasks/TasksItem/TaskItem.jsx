@@ -71,8 +71,8 @@ const TaskItem = ({ task }) => {
         <option value="Blocked">Blocked</option>
         <option value="Completed">Completed</option>
       </select>
-      <img className={styles.iconDelete} src={iconoDelete} alt={"Eliminar"} onClick={() => handleDeleteTask(task_id)}></img>
       <div className={styles.divButton}>
+      <img className={styles.iconDelete} src={iconoDelete} alt={"Eliminar"} onClick={() => handleDeleteTask(task_id)}></img>
         <img
           className={styles.editButton}
           src={editIcon}

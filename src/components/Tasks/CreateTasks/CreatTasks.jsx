@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import styles from './TasksForm.module.sass'; 
+import styles from './CreateTask.module.sass'; 
 import iconClose from '../../../images/iconClose.png';
 import { useTasks } from '../../../views/myTasks/MyTasksView';
 

@@ -9,14 +9,14 @@ const TaskList = () => {
   return (
     <div className={style.taskList}>
       <NabBar/>
-      <ul className={style.ulTask}>
+      <div className={style.ulTask}>
         {tasks.map(task => (
           <TaskItem
             key={task.id} 
             task={task}
           />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

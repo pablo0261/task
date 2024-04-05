@@ -3,7 +3,7 @@ import axios from 'axios';
 import TaskList from '../../components/Tasks/TasksList/TaskList';
 import CreateTask from '../../components/Tasks/CreateTasks/CreatTasks';
 import AdminBar from '../../components/Tasks/AdminBar/AdminBar';
-
+import styles from './myTask.module.sass'
 import Swal from 'sweetalert2';
 import StoreItem from '../../helpers/LocalStorage'
 import { jwtDecode } from "jwt-decode";
@@ -140,7 +140,9 @@ const MyTasks = () => {
   return (
     <TasksContext.Provider value={{ tasks,handleUpdateFullTask, handleCreateTask, handleDeleteTask, handleUpdateTask, showForm, setShowForm }}>
     <div>
-      <h1>Mis Tareas</h1>
+      <div className={styles.logo}>
+      <h1 className={styles.h1Logo}>Mis Tareas</h1>
+      </div>
       {admin && <AdminBar/>}
       {showForm &&
       <CreateTask /> }
