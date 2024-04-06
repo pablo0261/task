@@ -4,11 +4,11 @@ import styles from "./TaskItem.module.sass";
 import editIcon from "../../../images/iconEdit4.png";
 import CreateTask from "../../Tasks/CreateTasks/CreatTasks";
 import { useTasks } from "../../../views/myTasks/MyTasksView";
-import iconoDelete from  "../../../images/iconDelete2.png"
+import iconoDelete from "../../../images/iconDelete2.png";
 
 const TaskItem = ({ task }) => {
   const { task_id, title, description, user, status } = task;
-  const { handleUpdateTask, handleDeleteTask } = useTasks();
+  const { handleUpdateTask, handleDeleteTask, admin } = useTasks();
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
 
@@ -39,26 +39,23 @@ const TaskItem = ({ task }) => {
 
   const selectStyle = {
     backgroundColor: getStatusColor(currentStatus), // Cambia el fondo
-    color: '#fff', // Asegúrate de que el texto sea legible
+    color: "#fff", // Asegúrate de que el texto sea legible
   };
 
   return (
     <div key={task_id} className={styles.taskItem}>
-
       <div className={styles.containerLeft}>
-      <h2 className={styles.title}>{title}</h2>
-      <div className={styles.description}>
-        <p>{description}</p>{" "}
+        <h2 className={styles.title}>{title}</h2>
+        <div className={styles.description}>
+          <p>{description}</p>{" "}
+        </div>
       </div>
-      </div>
-
 
       <div className={styles.containerRight}>
-      <div className={styles.assigned}>
-        <p className={styles.assignedTitle}>Assigned To:</p>
-        <p className={styles.assignedUser}>{user.username}</p>
-      </div>
-      
+        <div className={styles.assigned}>
+          <p className={styles.assignedTitle}>Assigned To:</p>
+          <p className={styles.assignedUser}>{user.username}</p>
+        </div>
       </div>
       <select
         className={styles.status}
@@ -71,15 +68,22 @@ const TaskItem = ({ task }) => {
         <option value="Blocked">Blocked</option>
         <option value="Completed">Completed</option>
       </select>
-      <div className={styles.divButton}>
-      <img className={styles.iconDelete} src={iconoDelete} alt={"Eliminar"} onClick={() => handleDeleteTask(task_id)}></img>
-        <img
-          className={styles.editButton}
-          src={editIcon}
-          alt={"Edit"}
-          onClick={toggleFormVisibility}
-        />
-      </div>
+      {admin && (
+        <div className={styles.divButton}>
+          <img
+            className={styles.iconDelete}
+            src={iconoDelete}
+            alt={"Eliminar"}
+            onClick={() => handleDeleteTask(task_id)}
+          ></img>
+          <img
+            className={styles.editButton}
+            src={editIcon}
+            alt={"Edit"}
+            onClick={toggleFormVisibility}
+          />
+        </div>
+      )}
       {showForm && <CreateTask setShowForm={setShowForm} taskToEdit={task} />}
     </div>
   );

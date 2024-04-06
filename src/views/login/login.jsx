@@ -15,7 +15,7 @@ import { jwtDecode } from "jwt-decode";
 const initialValues = {
   email: "",
   password: "",
-  rememberMe: false,
+  rememberMe: "",
 };
 
 function LogIn() {
@@ -25,11 +25,12 @@ function LogIn() {
   useEffect(() => {
     const tokenStorage = localStorage.getItem('token');
     if (tokenStorage) {
-      console.log("localStorage", localStorage)
+      console.log("tokenStorage", tokenStorage)
       try {
         const decodedToken = jwtDecode(tokenStorage);
         const username = decodedToken.username;
         console.log('Usuario ya autenticado:', decodedToken.username);
+        console.log('typeAdmin:', decodedToken.typeAdmin);
         Swal.fire({
           icon: "success",
           title: `¡Bienvenido de nuevo ${username}!`,
@@ -41,7 +42,7 @@ function LogIn() {
           if (result.isConfirmed) {
             navigate("/myTasks");
           } else if (result.isDenied) {
-            navigate("/login"); // Asegúrate de que esta ruta exista y esté configurada para volver al inicio de sesión
+            navigate("/login"); 
           }
         });
       } catch (error) {

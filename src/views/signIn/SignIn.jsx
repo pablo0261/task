@@ -1,5 +1,5 @@
 import { Formik, Form } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import FormikInput from "../../components/formik/formikInput";
 import SignInValidationSchema from "./SignInValidation";
 import style from "./SignIn.module.sass";
@@ -7,12 +7,15 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import helpers from "../../helpers/routesFront";
 
+const initialValues = {
+  username: "",
+  email: "",
+  password: "",
+  typeAdmin: false
+};
+
 const SignIn = () => {
-  const initialValues = {
-    username: "",
-    email: "",
-    password: "",
-  };
+  const navigate =  useNavigate();
 
   const handleSubmit = async (values) => {
     try {
@@ -20,13 +23,12 @@ const SignIn = () => {
       const response = await axios.post("http://localhost:3000/signin", values);
       console.log("response:", response);
 
-      if (response.status === 200) {
+      if (response.status >= 200) {
         console.log(
           "Inicio de sesión exitoso con email y contraseña:",
           response.data
         );
-        window.alert("Aqui voy al myTask")
-        // Aquí puedes manejar la respuesta del servidor, como guardar el token y redirigir a la página de inicio
+        navigate("/login");
       }
     } catch (error) {
       console.error("Error al iniciar sesión con email y contraseña:", error);

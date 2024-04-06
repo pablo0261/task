@@ -14,8 +14,9 @@
     width: calc(48% - 10px)
     display: flex
 
-.Inputs
+.Inputs1, .Inputs2
     width: 50%
+    min-width: 200px
     padding: 5px
     font-size: 18px
     font-family:  Arial, Helvetica, sans-serif
@@ -58,5 +59,11 @@
     .divInputs
         display: block
     .divButtonCreateTask
-        border: solid blue 3px
         align-items : center
+
+@media (max-width: 450px)           
+    .Inputs1
+        display: none
+    .backWrapper
+        display: block   
+   
