@@ -20,9 +20,9 @@ const NabBar = () => {
       <div className={style.divButtonCreateTask}>
         <button onClick={toggleFormVisibility} className={style.ButtonCreateTask}>
          + Tarea
-         {showForm && <CreateTask setShowForm={setShowForm} />}
         </button>
       </div>
+         {showForm && <CreateTask setShowForm={setShowForm} />}
     </div>
   );
 };

@@ -48,6 +48,7 @@ const MyTasks = () => {
   }, []);
 
   const handleCreateTask = async (newTaskData) => {
+    console.log("newTaskData", newTaskData)
     try {
       const response = await axios.post(
         "http://localhost:3000/tasks",

@@ -5,18 +5,17 @@ import styles from './CreateTask.module.sass';
 import iconClose from '../../../images/iconClose.png';
 import { useTasks } from '../../../views/myTasks/MyTasksView';
 
-const CreateTaskForm = ({ taskToEdit }) => {
+const CreateTaskForm = ({ taskToEdit, setShowForm }) => {
   const { handleCreateTask } = useTasks();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('Pendiente');
   const [assignedTo, setAssignedTo] = useState('');
   const [users, setUsers] = useState([]);
-  const [showForm, setShowForm] = useState(true); 
 
   useEffect(() => {
     if (taskToEdit) {
-      setTitle(taskToEdit.title);
+    setTitle(taskToEdit.title);
       setDescription(taskToEdit.description);
       setStatus(taskToEdit.status);
       setAssignedTo(taskToEdit.assigned_to);
@@ -50,7 +49,9 @@ const CreateTaskForm = ({ taskToEdit }) => {
   };
 
   return (
-    <form className={styles.TaskForm} onSubmit={handleSubmit} style={{ display: showForm ? 'block' : 'none' }}>
+    <div className={styles.background}>
+    <div className={styles.blurBackground}>
+    <form className={styles.TaskForm} onSubmit={handleSubmit} >
       <img className={styles.iconClose} src={iconClose} alt={"X"} onClick={handleCloseForm} />
       <label>
         Título:
@@ -70,10 +71,10 @@ const CreateTaskForm = ({ taskToEdit }) => {
       <label>
         Estado:
         <select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="Pendiente">Pendiente</option>
-          <option value="En proceso">En proceso</option>
-          <option value="Bloqueado">Bloqueado</option>
-          <option value="Completado">Completado</option>
+          <option value="Pending">Pendiente</option>
+          <option value="In Progress">En proceso</option>
+          <option value="Blocked">Bloqueado</option>
+          <option value="Completed">Completado</option>
         </select>
       </label>
       <label>
@@ -89,11 +90,14 @@ const CreateTaskForm = ({ taskToEdit }) => {
       </label>
       <button type="submit">Todo Listo</button>
     </form>
+    </div>
+    </div>
   );
 };
 
 CreateTaskForm.propTypes = {
-  taskToEdit: PropTypes.object // Puedes ajustar el tipo de dato según la estructura de tu objeto task
+  taskToEdit: PropTypes.object,
+  setShowForm: PropTypes.func
 };
 
 export default CreateTaskForm;

@@ -1,21 +1,38 @@
 @use '../../../style/Mixins'
 @import '../../../style/Variables'
 
+.background
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  z-index: 9999
+
+.blurBackground 
+  position: absolute
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  backdrop-filter: blur(5px)
+  background-color: rgba(0, 0, 0, 0.5)
 
 .TaskForm
-  display: flex
+  display: block
   font-family: $font-primary
   position: fixed
-  top: 50%
-  left: 50%
-  transform: translate(-50%, -50%)
-  width: 400px
-  margin: 0 auto
+  top: 5%
+  left: 35%
+  width: 25%
   background-color: $sistemColor
   padding: 40px
   border-radius: 10px
   box-shadow: 0px 0px 10px $secondaryColor
-  z-index: 9999
+  z-index: 999999
   backdrop-filter: blur(5px)
 
 .iconClose
@@ -26,7 +43,7 @@
   margin-left: auto
   border-radius: 50px
 .iconClose:hover
-  background-color: #ffd700
+  background-color: $yellowColor
   transform: scale(1.05)
 .iconClose:active
   transform: scale(0.95)
@@ -53,8 +70,8 @@ textarea
 button[type="submit"]
   display: block
   width: 100% // Asegúrate de que el botón también ocupe todo el ancho
-  background-color: $greenColor
-  color: white
+  background-color: darken($yellowColor, 10%)
+  color: $textColor
   border: none
   height: 45px
   margin-top: 20px // Ajusta según necesites
@@ -65,6 +82,7 @@ button[type="submit"]
 
   &:hover
     background-color: darken($secondaryColor, 10%)
+    color: $primaryColor
   &:active
     transform: scale(0.95)
 
