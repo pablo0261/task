@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import styles from './CreateTask.module.sass'; 
 import iconClose from '../../../images/iconClose.png';
-import { useTasks } from '../../../views/myTasks/MyTasksView';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTask, getUsers  } from '../../../redux/actions/actions.js';
+import { PENDING, IN_PROGRESS, BLOCKED, COMPLETED } from '../../../helpers/Constants'
 
 const CreateTaskForm = ({ taskToEdit, setShowForm }) => {
-  const { handleCreateTask } = useTasks();
+  const dispatch = useDispatch(); 
+  const users = useSelector(state => state.users); 
+  
+  const tasks = useSelector(state => state.tasks);
+
+  console.log("tasks del reducer", tasks)
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('Pendiente');
+  const [status, setStatus] = useState('Pending');
   const [assignedTo, setAssignedTo] = useState('');
-  const [users, setUsers] = useState([]);
+
+
 
   useEffect(() => {
     if (taskToEdit) {
@@ -23,14 +31,8 @@ const CreateTaskForm = ({ taskToEdit, setShowForm }) => {
   }, [taskToEdit]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/users')
-      .then((response) => {
-        setUsers(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al obtener los usuarios:', error);
-      });
-  }, []);
+    dispatch(getUsers());
+  }, [dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -40,7 +42,7 @@ const CreateTaskForm = ({ taskToEdit, setShowForm }) => {
       status: status,
       assigned_to: assignedTo
     };
-    handleCreateTask(newTaskData);
+    dispatch(addTask(newTaskData));
     setShowForm(false);
   };
 
@@ -71,10 +73,10 @@ const CreateTaskForm = ({ taskToEdit, setShowForm }) => {
       <label>
         Estado:
         <select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="Pending">Pendiente</option>
-          <option value="In Progress">En proceso</option>
-          <option value="Blocked">Bloqueado</option>
-          <option value="Completed">Completado</option>
+          <option value={PENDING}>Pendiente</option>
+          <option value={IN_PROGRESS}>En proceso</option>
+          <option value={BLOCKED}>Bloqueado</option>
+          <option value={COMPLETED}>Completado</option>
         </select>
       </label>
       <label>

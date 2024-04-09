@@ -1,12 +1,11 @@
 import TaskItem from '../TasksItem/TaskItem.jsx';
-import { useTasks } from '../../../views/myTasks/MyTasksView.jsx';
+import { useSelector } from 'react-redux';
 import style from './TaskList.module.sass';
-// import NabBar from '../../NabBar/NabBar.jsx';
 
 const TaskList = () => {
-  const { tasks } = useTasks();
+  const tasks = useSelector(state => state.tasks);
 
-  const taskIds = tasks.map(task => task.id);
+  const taskIds = tasks.map(task => task.task_id);
 const duplicateIds = taskIds.filter((id, index) => taskIds.indexOf(id) !== index);
 
 console.log('IDs duplicados:', duplicateIds);
