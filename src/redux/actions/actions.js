@@ -31,7 +31,9 @@ const addTask = (task) => {
 const getTask = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/tasks`);
+      const response = await axios.get(`http://localhost:3000/tasks`);
+      console.log("ruta", `${REACT_APP_API_URL}/tasks`)
+      console.log("payload", response)
       
       dispatch({
         type: GET_TASK,

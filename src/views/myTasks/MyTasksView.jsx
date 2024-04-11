@@ -9,7 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import { useDispatch } from 'react-redux'; 
 import { getTask, addTask, deleteTask, updateTask } from '../../redux/actions/actions'; 
 
-const TasksContext = createContext();
+export const TasksContext = createContext();
 
 export const useTasks = () => useContext(TasksContext);
 
@@ -18,8 +18,9 @@ const MyTasks = () => {
 
   const [showForm, setShowForm] = useState(false);
   const [admin, setAdmin] = useState();
-  const tasks = useSelector(state => state.tasks);
+  const tasks = useSelector(state => state.tasks.tasks);
  
+  console.log("tasks", tasks)
   useEffect(() => {
     dispatch(getTask());
 

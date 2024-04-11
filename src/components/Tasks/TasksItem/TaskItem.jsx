@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useTasks } from "../../../views/myTasks/MyTasksView";
 import PropTypes from "prop-types";
 import styles from "./TaskItem.module.sass";
 import editIcon from "../../../images/iconEdit4.png";
 import CreateTask from "../../Tasks/CreateTasks/CreatTasks";
-import { useTasks } from "../../../views/myTasks/MyTasksView";
 import iconoDelete from "../../../images/iconDelete2.png";
 
 const TaskItem = ({ task }) => {
   const { task_id, title, description, user, status } = task;
-  const { handleUpdateTask, handleDeleteTask, admin } = useTasks();
+  const { handleUpdateTask, handleDeleteTask, admin } = useContext(useTasks);
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
 
