@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
 import TaskList from "../../components/Tasks/TasksList/TaskList";
 import CreateTask from "../../components/Tasks/CreateTasks/CreatTasks";
 import NabBar from "../../components/NabBar/NabBar";
@@ -17,7 +18,8 @@ const MyTasks = () => {
 
   const [showForm, setShowForm] = useState(false);
   const [admin, setAdmin] = useState();
-
+  const tasks = useSelector(state => state.tasks);
+ 
   useEffect(() => {
     dispatch(getTask());
 
@@ -36,21 +38,6 @@ const MyTasks = () => {
     }
   }, []);
 
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/tasks")
-  //     .then((response) => {
-  //       setTasks(response.data);
-  //     })
-  //     .catch((error) => {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "Error al obtener las tareas",
-  //         text: error.message,
-  //       });
-  //     });
-  // }, []);
 
   const handleCreateTask = async (newTaskData) => {
     try {
@@ -94,14 +81,15 @@ const MyTasks = () => {
 
   return (
     <TasksContext.Provider
-      value={{
-        admin,
-        handleCreateTask,
-        handleDeleteTask,
-        handleUpdateTask,
-        showForm,
-        setShowForm,
-      }}
+    value={{
+      admin,
+      tasks,
+      handleCreateTask,
+      handleDeleteTask,
+      handleUpdateTask,
+      showForm,
+      setShowForm,
+    }}
     >
       <div>
         <div className={styles.logo}>
