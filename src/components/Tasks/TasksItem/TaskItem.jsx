@@ -12,10 +12,11 @@ const TaskItem = ({ task }) => {
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
 
-  const handleStatusChange = (e) => {
+  const handleStatusChange = (task_id, e) => {
     const newStatus = e.target.value;
     setCurrentStatus(newStatus);
     handleUpdateTask(task_id, newStatus);
+    console.log("task_id, newStatus", task_id, newStatus)
   };
 
   const toggleFormVisibility = () => {
@@ -60,7 +61,7 @@ const TaskItem = ({ task }) => {
       <select
         className={styles.status}
         value={currentStatus}
-        onChange={handleStatusChange}
+        onChange={(e) => handleStatusChange(task_id, e)}
         style={selectStyle}
       >
         <option value="Pending">Pending</option>

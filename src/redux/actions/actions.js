@@ -78,7 +78,7 @@ const updateTask = (taskId, updatedTask) => {
       const response = await axios.put(`${BASE_URL}/tasks/${taskId}`, updatedTask);
       dispatch({
         type: UPDATE_TASK,
-        payload: response.data.task, // Envía la tarea actualizada al reducer
+        payload: response.data, // Envía la tarea actualizada al reducer
       });
       Swal.fire({
         title: "Tarea actualizada con éxito",
