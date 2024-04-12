@@ -23,7 +23,7 @@ const tasksReducer = (state = initialState, action) => {
       };
     case GET_TASK:
       return {
-        tasks: [action.payload],
+        tasks: action.payload,
       };
     case DELETE_TASK:
       return {
@@ -40,7 +40,7 @@ const tasksReducer = (state = initialState, action) => {
     case GET_USERS:
       return {
         ...state,
-        users: action.payload,
+        users: [action.payload],
       };
     default:
       return state;

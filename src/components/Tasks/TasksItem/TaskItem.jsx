@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useTasks } from "../../../views/myTasks/MyTasksView";
+import {  TasksContext  } from "../../../views/myTasks/MyTasksView";
 import PropTypes from "prop-types";
 import styles from "./TaskItem.module.sass";
 import editIcon from "../../../images/iconEdit4.png";
@@ -8,7 +8,7 @@ import iconoDelete from "../../../images/iconDelete2.png";
 
 const TaskItem = ({ task }) => {
   const { task_id, title, description, user, status } = task;
-  const { handleUpdateTask, handleDeleteTask, admin } = useContext(useTasks);
+  const { handleUpdateTask, handleDeleteTask, admin } = useContext( TasksContext );
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
 
@@ -39,7 +39,7 @@ const TaskItem = ({ task }) => {
 
   const selectStyle = {
     backgroundColor: getStatusColor(currentStatus), // Cambia el fondo
-    color: "#fff", // Asegúrate de que el texto sea legible
+    color: "#fff", 
   };
 
   return (

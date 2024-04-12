@@ -3,12 +3,13 @@ import Swal from "sweetalert2";
 
 import { GET_TASK, ADD_TASK, DELETE_TASK, UPDATE_TASK, GET_USERS  } from "./action-types";
 
-const REACT_APP_API_URL = import.meta.env.VITE_BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 const addTask = (task) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${REACT_APP_API_URL}/tasks`, task);
+      const response = await axios.post(`${BASE_URL}/tasks`, task);
       dispatch({
         type: ADD_TASK,
         payload: response.data, 
@@ -31,20 +32,14 @@ const addTask = (task) => {
 const getTask = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:3000/tasks`);
-      console.log("ruta", `${REACT_APP_API_URL}/tasks`)
-      console.log("payload", response)
+      const response = await axios.get(`${BASE_URL}/tasks`);
+      console.log("ruta", `${BASE_URL}/tasks`)
       
       dispatch({
         type: GET_TASK,
         payload: response.data, 
       });
-      Swal.fire({
-        title: "Tarea cargadas con exito",
-        icon: "success",
-      });
     } catch (error) {
-      // Manejar cualquier error que ocurra durante la solicitud
       Swal.fire({
         title: `${error}`,
         icon: "warning",
@@ -57,7 +52,7 @@ const getTask = () => {
 const deleteTask = (taskId) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`${REACT_APP_API_URL}/tasks/${taskId}`);
+      await axios.delete(`${BASE_URL}/tasks/${taskId}`);
       dispatch({
         type: DELETE_TASK,
         payload: taskId, // Envía el ID de la tarea eliminada al reducer
@@ -80,7 +75,7 @@ const deleteTask = (taskId) => {
 const updateTask = (taskId, updatedTask) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(`${REACT_APP_API_URL}/tasks/${taskId}`, updatedTask);
+      const response = await axios.put(`${BASE_URL}/tasks/${taskId}`, updatedTask);
       dispatch({
         type: UPDATE_TASK,
         payload: response.data.task, // Envía la tarea actualizada al reducer
@@ -92,7 +87,7 @@ const updateTask = (taskId, updatedTask) => {
       });
     } catch (error) {
       Swal.fire({
-        title: `${error}`,
+        title: `Error al editar la tarea`,
         icon: "warning",
         confirmButtonText: "Aceptar",
       });
@@ -103,7 +98,7 @@ const updateTask = (taskId, updatedTask) => {
 const getUsers = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${REACT_APP_API_URL}/users`);
+      const response = await axios.get(`${BASE_URL}/users`);
       dispatch({
         type: GET_USERS,
         payload: response.data,

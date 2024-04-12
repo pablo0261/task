@@ -5,20 +5,13 @@ import { TasksContext } from "../../../views/myTasks/MyTasksView.jsx";
 
 const TaskList = () => {
   const { tasks } = useContext(TasksContext);
-console.log("tasks", tasks)
-  const taskIds = tasks.map((task) => task.task_id);
-  const duplicateIds = taskIds.filter(
-    (id, index) => taskIds.indexOf(id) !== index
-  );
-
-  console.log("IDs duplicados:", duplicateIds);
 
   return (
     <div className={style.taskList}>
       {/* <NabBar/> */}
       <div className={style.ulTask}>
-        {tasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
+        {tasks.map(task => (
+           <TaskItem key={task.task_id} task={task} />
         ))}
       </div>
     </div>

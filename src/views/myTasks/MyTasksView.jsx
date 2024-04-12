@@ -20,7 +20,6 @@ const MyTasks = () => {
   const [admin, setAdmin] = useState();
   const tasks = useSelector(state => state.tasks.tasks);
  
-  console.log("tasks", tasks)
   useEffect(() => {
     dispatch(getTask());
 
@@ -42,7 +41,7 @@ const MyTasks = () => {
 
   const handleCreateTask = async (newTaskData) => {
     try {
-      dispatch(addTask(newTaskData)); // Dispatch a la acción para agregar una tarea
+      dispatch(addTask(newTaskData)); 
       setShowForm(false);
     } catch (error) {
       console.error("Error al crear la tarea:", error);
@@ -56,7 +55,7 @@ const MyTasks = () => {
 
   const handleDeleteTask = (taskId) => {
     try {
-      dispatch(deleteTask(taskId)); // Dispatch a la acción para eliminar una tarea
+      dispatch(deleteTask(taskId)); 
     } catch (error) {
       console.error("Error al eliminar la tarea:", error);
       Swal.fire({
@@ -69,7 +68,7 @@ const MyTasks = () => {
 
   const handleUpdateTask = (taskId, updatedTask) => {
     try {
-      dispatch(updateTask(taskId, updatedTask)); // Dispatch a la acción para actualizar una tarea
+      dispatch(updateTask(taskId, updatedTask)); 
     } catch (error) {
       console.error("Error al actualizar la tarea:", error);
       Swal.fire({
