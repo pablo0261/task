@@ -3,13 +3,12 @@
 
 .background
     @include Mixins.flexbox(column, center, center)
-    background: radial-gradient(rgba(0, 0, 78, 0.5) 5%, rgba(255, 255, 255, 0) 5%)
+    background: radial-gradient(rgba($yellowColor, 0.9) 5%, rgba(255, 255, 255, 0) 5%)
     background-size: 35px 35px
     width: 100%
     height: fit-content
 
     .marginContainer
-        
         width: 100vw
         height: 100vh
         @include Mixins.flexbox(column, center, center)
@@ -21,7 +20,7 @@
             .logo
                 color: white
                 @include Mixins.fontGrotesqueBolder($secondaryColor, 30px)
-                margin: 20px 0px 0px 0px
+                margin: 20px 0px 0px 20px
 
         .quoteWrapper
             width: 100%
@@ -47,6 +46,7 @@
             @include Mixins.flexbox(column, center, center)
 
             .form
+                display: flex
                 width: 30vw
                 min-width: 350px
                 max-width: 450px
@@ -61,18 +61,24 @@
                 .formik
                     width: 80%
                     @include Mixins.flexbox(column, center, flex-start)
-                    gap: 10px
+                    gap: 5px
 
+                    .inputRememberMe
+                        align-self: flex-start
+                        width: 60%
                     .rememberMe
+                        height:  40px
+                        align-items: center
+                        justify-content: left
+                        width: 40%
                         display: flex
                         color: $secondaryColor
-                        margin-left: 5px
 
                     .rememberMeText
                         font-size: 16px
-                        margin-left: 5px
                         
                     .submitBtn
+                        align-self: center
                         @include Mixins.buttonFormat($accentColor)
                         @include Mixins.fontGrotesqueSemibold($secondaryColor, 20px)
                         transition: .2s
@@ -82,7 +88,7 @@
 
                 .separator
                     width: 80%
-                    margin: 15px 0px 15px 0px
+                    margin: 10px 0px 10px 0px
                     @include Mixins.flexbox(row, space-between, center)
 
                     .line
@@ -94,19 +100,33 @@
                         @include Mixins.fontGrotesqueNormal($secondaryColor, 20px)
 
                 .socialApps
-                    width: 80%
+                    display: flex
+                    width: 100%
                     @include Mixins.flexbox(row, center, center)
-                    margin-bottom: 30px
+                    margin: auto 0
+                    align-contem: center
 
-                    .google
-                        width: 47%
+                    .google, .facebook
+                        width: 50%
                         padding: 5px
                         text-align: center
+                        margin-inline: 5px
                         border-radius: 7px
                         box-sizing: border-box
                         background-color: #4183F3
-                        @include Mixins.fontGrotesqueSemibold($primaryColor, 20px)
-                    
+                        @include Mixins.fontGrotesqueSemibold($primaryColor, 12px)
+                        transition: .2s
+
+                    .google:hover
+                        transform: scale(1.02)
+                    .facebook:hover
+                        transform: scale(1.02) 
+
+                    .google:clicked
+                        transform: scale(0.08)
+                    .facebook:clicked
+                        transform: scale(0.08)
+
                     .googleButton
                         width: 100%
                         padding: 5px
@@ -115,13 +135,17 @@
                         box-sizing: border-box
                         background-color: #4183F3
                         @include Mixins.fontGrotesqueSemibold($primaryColor, 20px)
+  
 
             .questionWrapper
-                width: 30%
+                display: flex
+                width: 60%
+                justify-content: center
 
                 .question
                     @include Mixins.fontGrotesqueNormal($secondaryColor, 16px)
-                    margin-top: 20px
+                    margin-top: 10px
+                    text-align: left
 
                     .link
                         @include Mixins.fontGrotesqueSemibold($secondaryColor, 16px)
@@ -138,3 +162,13 @@
         .footerWrapper
             width: 100%
             @include Mixins.flexbox(row, flex-start, center)
+
+
+@media screen and (max-width: 400px) 
+        .quote
+            transform: scale(.7)
+            margin: 5px 0px 0px 0px
+        .slogan
+            display: none
+        .logo
+            display: none
