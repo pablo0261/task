@@ -5,7 +5,8 @@ import loginValidationSchema from "./loginValidation.js";
 import helpers from "../../helpers/routesFront.js";
 import style from "./LogIn.module.sass";
 import axios from "axios";
-import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
+
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import StoreItem from "../../helpers/LocalStorage.js";
@@ -53,7 +54,7 @@ function LogIn() {
   const handleLogin = async (values) => {
     try {
       console.log(values, "values");
-      const response = await axios.post("http://localhost:3000/login", values);
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/login`, values);
       console.log(response.status, "response.status");
       if (response.status === 200) {
         const token = response.data.token;
@@ -109,59 +110,85 @@ function LogIn() {
     }
   };
 
-  const onGoogleLoginSuccess = async () => {
+  const loginWithGoogle = async (credentialResponse) => {
     try {
-      // Envía el código de autorización al servidor para iniciar sesión con Google
-      const response = await axios.post("http://localhost:3000/login/google", {
-        code: "your_code",
-        client_id: "your_client_id",
-        client_secret: "your_client_secret",
-        redirect_uri: "your_redirect_uri",
-        grant_type: "authorization_code",
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/login/google`, {
+        token: credentialResponse.credential,
       });
-
       if (response.status === 200) {
-        // El servidor ha validado el código y ha respondido con un token JWT
-        console.log("Token recibido del servidor:", response.data.token);
-        // Aquí puedes manejar la respuesta del servidor, como guardar el token en el almacenamiento local o redirigir a otra página
+        localStorage.setItem("token", response.data.token);
+        navigate("/myTasks");
       } else {
-        // Maneja errores de inicio de sesión con Google
-        console.error(
-          "Error de inicio de sesión con Google en el servidor:",
-          response.statusText
-        );
-
-        // Mostrar el mensaje de error proporcionado por el servidor
         Swal.fire({
           icon: "error",
           title: "Error",
-          text:
-            response.data.error ||
-            "Ocurrió un error al iniciar sesión con Google. Por favor, inténtalo de nuevo más tarde.",
+          text: "Error al iniciar sesión con Google.",
         });
       }
     } catch (error) {
-      console.error(
-        "Error al enviar el código de autorización al servidor:",
-        error
-      );
-
-      // Mostrar el mensaje de error
+      console.error("Error al enviar los datos de inicio de sesión al servidor:", error);
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Ocurrió un error al iniciar sesión con Google. Por favor, inténtalo de nuevo más tarde.",
+        text: error.response.data.error || "Ocurrió un error al enviar los datos de inicio de sesión al servidor. Por favor, inténtalo de nuevo más tarde.",
       });
     }
-  };
+  }
+  
 
-  const onGoogleLogin = useGoogleLogin({
-    onSuccess: onGoogleLoginSuccess,
-    flow: "auth-code",
-    scope: "https://www.googleapis.com/auth/plus.login",
-    cookiepolicy: "none",
-    accesstype: "offline",
-  });
+  // const onGoogleLoginSuccess = async () => {
+  //   try {
+  //     // Envía el código de autorización al servidor para iniciar sesión con Google
+  //     const response = await axios.post("http://localhost:3000/login/google", {
+  //       code: "your_code",
+  //       client_id: "your_client_id",
+  //       client_secret: "your_client_secret",
+  //       redirect_uri: "your_redirect_uri",
+  //       grant_type: "authorization_code",
+  //     });
+
+  //     if (response.status === 200) {
+  //       // El servidor ha validado el código y ha respondido con un token JWT
+  //       console.log("Token recibido del servidor:", response.data.token);
+  //       // Aquí puedes manejar la respuesta del servidor, como guardar el token en el almacenamiento local o redirigir a otra página
+  //     } else {
+  //       // Maneja errores de inicio de sesión con Google
+  //       console.error(
+  //         "Error de inicio de sesión con Google en el servidor:",
+  //         response.statusText
+  //       );
+
+  //       // Mostrar el mensaje de error proporcionado por el servidor
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "Error",
+  //         text:
+  //           response.data.error ||
+  //           "Ocurrió un error al iniciar sesión con Google. Por favor, inténtalo de nuevo más tarde.",
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.error(
+  //       "Error al enviar el código de autorización al servidor:",
+  //       error
+  //     );
+
+  //     // Mostrar el mensaje de error
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Error",
+  //       text: "Ocurrió un error al iniciar sesión con Google. Por favor, inténtalo de nuevo más tarde.",
+  //     });
+  //   }
+  // };
+
+  // const onGoogleLogin = useGoogleLogin({
+  //   onSuccess: onGoogleLoginSuccess,
+  //   flow: "auth-code",
+  //   scope: "https://www.googleapis.com/auth/plus.login",
+  //   cookiepolicy: "none",
+  //   accesstype: "offline",
+  // });
 
   return (
     <div className={style.background}>
@@ -212,12 +239,18 @@ function LogIn() {
                       Ingresar
                     </button>
                     <div className={style.socialApps}>
-                      <button className={style.google} onClick={onGoogleLogin}>
-                        Ingresar con Google
-                      </button>
-                      <button className={style.facebook} onClick={onGoogleLogin}>
-                        Ingresar con Google
-                      </button>
+                      <GoogleLogin
+                        onSuccess={(credentialResponse) => {
+                          console.log(
+                            credentialResponse,
+                            "Credenciales obtenidas correctamente"
+                          );
+                          loginWithGoogle(credentialResponse)
+                        }}
+                        onError={() => {
+                          console.log("Login Failed");
+                        }}
+                      />
                     </div>
                   </Form>
                 );
