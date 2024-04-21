@@ -112,9 +112,10 @@ function LogIn() {
 
   const loginWithGoogle = async (credentialResponse) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/login/google`, {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/loginGoogle`, {
         token: credentialResponse.credential,
       });
+      console.log("response",response)
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         navigate("/myTasks");
