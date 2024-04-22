@@ -81,7 +81,7 @@ const SignIn = () => {
             </div>
             <div className={style.questionWrapper}>
               <p className={style.question}>
-                ¿No tienes una cuenta?{" "}
+                ¿Ya tienes una cuenta?{" "}
                 <Link to={helpers.logIn} className={style.link}>
                   {" "}
                   Ingresa

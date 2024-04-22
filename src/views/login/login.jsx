@@ -242,10 +242,6 @@ function LogIn() {
                     <div className={style.socialApps}>
                       <GoogleLogin
                         onSuccess={(credentialResponse) => {
-                          console.log(
-                            credentialResponse,
-                            "Credenciales obtenidas correctamente"
-                          );
                           loginWithGoogle(credentialResponse)
                         }}
                         onError={() => {
