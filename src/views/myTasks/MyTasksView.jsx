@@ -7,7 +7,7 @@ import styles from "./myTask.module.sass";
 import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from 'react-redux'; 
-import { getTask, addTask, deleteTask, updateTask } from '../../redux/actions/actions'; 
+import { getTask, getUsers, addTask, deleteTask, updateTask } from '../../redux/actions/actions'; 
 
 export const TasksContext = createContext();
 
@@ -22,11 +22,13 @@ const MyTasks = () => {
  
   useEffect(() => {
     dispatch(getTask());
-
+    dispatch(getUsers());
+console.log("admin:", admin)
     const tokenStorage = localStorage.getItem('token');
     if (tokenStorage) {
       try {
         const decodedToken = jwtDecode(tokenStorage);
+        console.log("decodedToken:", decodedToken)
         setAdmin(decodedToken.typeAdmin);
       } catch (error) {
         Swal.fire({
@@ -97,7 +99,11 @@ const MyTasks = () => {
         </div>
         {admin && <NabBar />}
         {showForm && <CreateTask />}
-        <TaskList />
+        {tasks.length > 0 ? (
+        <TaskList tasks={tasks} />
+      ) : (
+        <p className={styles.noTasks}>No hay tareas asignadas.</p>
+      )}
       </div>
     </TasksContext.Provider>
   );

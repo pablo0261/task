@@ -1,0 +1,35 @@
+@use '../../style/Mixins'
+@import '../../style/Variables'
+    
+.divButtonCreateTask
+    display: flex
+    font-size: 20px
+    max-height: 50px
+    width: fit-content
+    background: $primaryColor
+    padding-inline: 10px
+    color: $textColor
+    font-weight: bold
+    align-items: center
+    border: solid  $secondaryColor 3px
+    border-radius: 8px
+    cursor: pointer
+    box-shadow:  3px 3px 7px  rgba($secondaryColor, 0.5)
+    &:hover
+        transform: scale(1.03)
+        box-shadow:  3px 3px 7px  $secondaryColor
+    &:active 
+        transform: scale(0.95)   
+        
+.ButtonCreateTask
+    @include Mixins.buttonFormat(#d4af3700)
+    font-size: 20px
+    width: fit-content
+    color: $textColor
+    font-weight: bold 
+    align-content: center
+
+    
+@media (max-width: 860px)     
+    .divButtonCreateTask
+        align-items : center    

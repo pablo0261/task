@@ -10,7 +10,6 @@
   display: flex
   justify-content: center
   align-items: center
-  z-index: 9999
 
 .blurBackground 
   position: absolute
@@ -32,7 +31,6 @@
   padding: 40px
   border-radius: 10px
   box-shadow: 0px 0px 10px $secondaryColor
-  z-index: 999999
   backdrop-filter: blur(5px)
 
 .iconClose
@@ -42,11 +40,11 @@
   cursor: pointer
   margin-left: auto
   border-radius: 50px
-.iconClose:hover
-  background-color: $yellowColor
-  transform: scale(1.05)
-.iconClose:active
-  transform: scale(0.95)
+// .iconClose:hover
+//   background-color: $yellowColor
+//   transform: scale(1.05)
+// .iconClose:active
+//   transform: scale(0.95)
 
 label
   margin: 10px
@@ -80,12 +78,12 @@ button[type="submit"]
   font-size: 16px
   transition: background-color 0.5s ease
 
-  &:hover
-    background-color: darken($secondaryColor, 10%)
-    color: $primaryColor
-  &:active
-    transform: scale(0.95)
+  // &:hover
+  //   background-color: darken($secondaryColor, 10%)
+  //   color: $primaryColor
+  // &:active
+  //   transform: scale(0.95)
 
-@media (max-width: 480px)  
-  .TaskForm 
-    width: 90%
+// @media (max-width: 480px)  
+//   .TaskForm 
+//     width: 90%

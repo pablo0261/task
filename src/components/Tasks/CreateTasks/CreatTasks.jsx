@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import styles from './CreateTask.module.sass'; 
 import iconClose from '../../../images/iconClose.png';
 import { useSelector, useDispatch } from 'react-redux';
-import { addTask, getUsers  } from '../../../redux/actions/actions.js';
+import { addTask} from '../../..//redux/actions/actions';
 import { PENDING, IN_PROGRESS, BLOCKED, COMPLETED } from '../../../helpers/Constants'
 
 const CreateTaskForm = ({ taskToEdit, setShowForm }) => {
   const dispatch = useDispatch(); 
-  const users = useSelector(state => state.users); 
-  
+  const users = useSelector(state => state.tasks.users);
+  console.log("users", users)
   const tasks = useSelector(state => state.tasks);
 
   console.log("tasks del reducer", tasks)
@@ -30,9 +30,6 @@ const CreateTaskForm = ({ taskToEdit, setShowForm }) => {
     }
   }, [taskToEdit]);
 
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
