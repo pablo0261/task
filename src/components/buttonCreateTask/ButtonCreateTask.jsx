@@ -1,9 +1,9 @@
 import style from "./ButtonCreateTask.module.sass";
-import { useState } from "react";
-import CreateTask from "../../components/Tasks/CreateTasks/CreatTasks";
+import { useContext } from "react";
+import { TasksContext } from "../../views/myTasks/MyTasksView"
 
 const ButtonCreateTask = () => {
-  const [showForm, setShowForm] = useState(false);
+  const { showForm, setShowForm } = useContext(TasksContext);
 
   const toggleFormVisibility = () => {
     setShowForm(!showForm);
@@ -14,7 +14,6 @@ const ButtonCreateTask = () => {
     <button onClick={toggleFormVisibility} className={style.ButtonCreateTask}>
       + Tarea 
     </button>
-    {showForm && <CreateTask setShowForm={setShowForm} />}
   </div>
   )
 };

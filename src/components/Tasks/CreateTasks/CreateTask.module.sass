@@ -5,33 +5,40 @@
   position: fixed
   top: 0
   left: 0
-  width: 100%
-  height: 100%
+  width: 100vw
+  height: 100vh
   display: flex
   justify-content: center
   align-items: center
+  margin: 0
+  z-index: 1
 
 .blurBackground 
+  display: flex
   position: absolute
+  align-items: center
+  justify-content: center
   top: 0
   left: 0
   width: 100%
   height: 100%
   backdrop-filter: blur(5px)
   background-color: rgba(0, 0, 0, 0.5)
+  z-index: 2
 
 .TaskForm
-  display: block
+  display: flex
+  flex-direction: column
   font-family: $font-primary
-  position: fixed
-  top: 5%
-  left: 35%
+  position: absolute
   width: 25%
+  height: fit-content
   background-color: $sistemColor
-  padding: 40px
+  padding: 4%
   border-radius: 10px
   box-shadow: 0px 0px 10px $secondaryColor
   backdrop-filter: blur(5px)
+  z-index: 999
 
 .iconClose
   display: flex
@@ -40,32 +47,47 @@
   cursor: pointer
   margin-left: auto
   border-radius: 50px
-// .iconClose:hover
-//   background-color: $yellowColor
-//   transform: scale(1.05)
-// .iconClose:active
-//   transform: scale(0.95)
+.iconClose:hover
+  background-color: $yellowColor
+  transform: scale(1.05)
+.iconClose:active
+  transform: scale(0.95)
 
-label
+.label
+  width: 85%
   margin: 10px
   display: block
   height: fit-content
-  width: 100%
 
-input, textarea, select
+.inputTitulo
+  width: 95%
+  padding: 8px
+  border: 1px solid #ccc
+  border-radius: 5px
+  margin-top: 5px
+  margin-inline: auto
+
+.select
   width: 100%
   padding: 8px
   border: 1px solid #ccc
   border-radius: 5px
   margin-top: 5px
+  margin-inline: auto
 
-textarea
+.textarea
+  width: 95%
+  padding: 8px
+  margin-inline: auto
+  border: 1px solid #ccc
+  border-radius: 5px
+  margin-top: 5pxv
   max-width: 100% // Asegura que no sea más ancho que los otros inputs
   min-height: 100px // Un mínimo para que no sea muy pequeño
-  max-height: 300px // Puede aumentar su altura hasta un 50% del alto del formulario
+  max-height: 40vh // Puede aumentar su altura hasta un 50% del alto del formulario
   resize: vertical // Permite al usuario cambiar solo la altura
 
-button[type="submit"]
+.button
   display: block
   width: 100% // Asegúrate de que el botón también ocupe todo el ancho
   background-color: darken($yellowColor, 10%)
@@ -77,13 +99,24 @@ button[type="submit"]
   cursor: pointer
   font-size: 16px
   transition: background-color 0.5s ease
+  &:hover
+    background-color: darken($secondaryColor, 10%)
+    color: $primaryColor
+  &:active
+    transform: scale(0.95)
 
-  // &:hover
-  //   background-color: darken($secondaryColor, 10%)
-  //   color: $primaryColor
-  // &:active
-  //   transform: scale(0.95)
-
-// @media (max-width: 480px)  
-//   .TaskForm 
-//     width: 90%
+@media (max-width: 480px)  
+  .TaskForm 
+    width: 90%
+    backdrop-filter: none
+  .inputTitulo
+    max-width: 95%  
+  .textarea
+    max-height: 30vh
+    max-width: 95%  
+  .button
+    &:hover
+      background-color: darken($secondaryColor, 10%)
+      color: $primaryColor
+    &:active
+      transform: scale(0.95)

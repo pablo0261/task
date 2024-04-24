@@ -98,7 +98,7 @@ console.log("admin:", admin)
           <h1 className={styles.h1Logo}>Mis Tareas</h1>
         </div>
         {admin && <NabBar />}
-        {showForm && <CreateTask />}
+        {showForm && <CreateTask setShowForm={setShowForm} />}
         {tasks.length > 0 ? (
         <TaskList tasks={tasks} />
       ) : (
