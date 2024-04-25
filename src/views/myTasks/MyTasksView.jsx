@@ -1,12 +1,11 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { useSelector } from 'react-redux';
+import  { createContext, useContext, useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import TaskList from "../../components/Tasks/TasksList/TaskList";
 import CreateTask from "../../components/Tasks/CreateTasks/CreatTasks";
 import NabBar from "../../components/NabBar/NabBar";
 import styles from "./myTask.module.sass";
 import Swal from "sweetalert2";
 import { jwtDecode } from "jwt-decode";
-import { useDispatch } from 'react-redux'; 
 import { getTask, getUsers, addTask, deleteTask, updateTask } from '../../redux/actions/actions'; 
 
 export const TasksContext = createContext();
@@ -17,18 +16,20 @@ const MyTasks = () => {
   const dispatch = useDispatch();
 
   const [showForm, setShowForm] = useState(false);
-  const [admin, setAdmin] = useState();
-  const tasks = useSelector(state => state.tasks.tasks);
+  const [admin, setAdmin] = useState(null); // Corregido: inicializa admin como null
+  const [tasks, setTasks] = useState([]); // Corregido: estado local para almacenar las tareas
+
+  const tasksState = useSelector(state => state.tasks.tasks);
  
   useEffect(() => {
     dispatch(getTask());
     dispatch(getUsers());
-console.log("admin:", admin)
+    console.log("admin:", admin);
     const tokenStorage = localStorage.getItem('token');
     if (tokenStorage) {
       try {
         const decodedToken = jwtDecode(tokenStorage);
-        console.log("decodedToken:", decodedToken)
+        console.log("decodedToken:", decodedToken);
         setAdmin(decodedToken.typeAdmin);
       } catch (error) {
         Swal.fire({
@@ -38,8 +39,12 @@ console.log("admin:", admin)
         });
       }
     }
-  }, []);
+  }, [dispatch]); // Corregido: agregado admin a las dependencias de useEffect
 
+  useEffect(() => {
+    // Actualizar el estado local de las tareas cuando cambie el estado global de las tareas
+    setTasks(tasksState);
+  }, [tasksState]); // Corregido: cambiar la dependencia a tasksState
 
   const handleCreateTask = async (newTaskData) => {
     try {
@@ -83,15 +88,15 @@ console.log("admin:", admin)
 
   return (
     <TasksContext.Provider
-    value={{
-      admin,
-      tasks,
-      handleCreateTask,
-      handleDeleteTask,
-      handleUpdateTask,
-      showForm,
-      setShowForm,
-    }}
+      value={{
+        admin,
+        tasks,
+        handleCreateTask,
+        handleDeleteTask,
+        handleUpdateTask,
+        showForm,
+        setShowForm,
+      }}
     >
       <div>
         <div className={styles.logo}>
@@ -100,10 +105,10 @@ console.log("admin:", admin)
         {admin && <NabBar />}
         {showForm && <CreateTask setShowForm={setShowForm} />}
         {tasks.length > 0 ? (
-        <TaskList tasks={tasks} />
-      ) : (
-        <p className={styles.noTasks}>No hay tareas asignadas.</p>
-      )}
+          <TaskList tasks={tasks} />
+        ) : (
+          <p className={styles.noTasks}>No hay tareas asignadas.</p>
+        )}
       </div>
     </TasksContext.Provider>
   );
