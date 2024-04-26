@@ -3,17 +3,16 @@ import PropTypes from "prop-types";
 import styles from "./CreateTask.module.sass";
 import iconClose from "../../../images/iconClose.png";
 import { useSelector, useDispatch } from "react-redux";
-import { addTask } from "../../..//redux/actions/actions";
+import { addTask, updateTask } from "../../../redux/actions/actions";
 import {
   PENDING,
   IN_PROGRESS,
   BLOCKED,
   COMPLETED,
 } from "../../../helpers/Constants";
-import { TasksContext } from "../../../views/myTasks/MyTasksView"
+import { TasksContext } from "../../../views/myTasks/MyTasksView";
 
-
-const CreateTaskForm = ({ taskToEdit }) => {
+const CreateTaskForm = ({ taskToEdit, actionToDo }) => {
   const { setShowForm } = useContext(TasksContext);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.tasks.users);
@@ -31,7 +30,7 @@ const CreateTaskForm = ({ taskToEdit }) => {
     }
   }, [taskToEdit]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, actionToDo) => {
     event.preventDefault();
     const newTaskData = {
       title: title,
@@ -39,7 +38,11 @@ const CreateTaskForm = ({ taskToEdit }) => {
       status: status,
       assigned_to: assignedTo,
     };
-    dispatch(addTask(newTaskData));
+    if (actionToDo === "add") {
+      dispatch(addTask(newTaskData));
+    } else {
+      dispatch(updateTask(taskToEdit.task_id, newTaskData));
+    }
     setShowForm(false);
   };
 
@@ -57,7 +60,7 @@ const CreateTaskForm = ({ taskToEdit }) => {
             alt={"X"}
             onClick={handleCloseForm}
           />
-          <label >
+          <label>
             Título:
             <input
               className={styles.inputTitulo}
@@ -76,9 +79,11 @@ const CreateTaskForm = ({ taskToEdit }) => {
           </label>
           <label>
             Estado:
-            <select 
-            className={styles.select}
-            value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select
+              className={styles.select}
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
               <option value={PENDING}>Pendiente</option>
               <option value={IN_PROGRESS}>En proceso</option>
               <option value={BLOCKED}>Bloqueado</option>
@@ -88,7 +93,7 @@ const CreateTaskForm = ({ taskToEdit }) => {
           <label>
             Asignado a:
             <select
-            className={styles.select}
+              className={styles.select}
               value={assignedTo}
               onChange={(e) => setAssignedTo(e.target.value)}
             >
@@ -100,9 +105,9 @@ const CreateTaskForm = ({ taskToEdit }) => {
               ))}
             </select>
           </label>
-          <button 
-          className={styles.button}
-          type="submit">Todo Listo</button>
+          <button className={styles.button} type="submit">
+            Todo Listo
+          </button>
         </form>
       </div>
     </div>

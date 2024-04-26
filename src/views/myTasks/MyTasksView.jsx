@@ -18,18 +18,16 @@ const MyTasks = () => {
   const [showForm, setShowForm] = useState(false);
   const [admin, setAdmin] = useState(null); // Corregido: inicializa admin como null
   const [tasks, setTasks] = useState([]); // Corregido: estado local para almacenar las tareas
-
+console.log("tasks", tasks)
   const tasksState = useSelector(state => state.tasks.tasks);
  
   useEffect(() => {
     dispatch(getTask());
     dispatch(getUsers());
-    console.log("admin:", admin);
     const tokenStorage = localStorage.getItem('token');
     if (tokenStorage) {
       try {
         const decodedToken = jwtDecode(tokenStorage);
-        console.log("decodedToken:", decodedToken);
         setAdmin(decodedToken.typeAdmin);
       } catch (error) {
         Swal.fire({
@@ -39,7 +37,7 @@ const MyTasks = () => {
         });
       }
     }
-  }, [dispatch]); // Corregido: agregado admin a las dependencias de useEffect
+  }, []); // Corregido: agregado admin a las dependencias de useEffect
 
   useEffect(() => {
     // Actualizar el estado local de las tareas cuando cambie el estado global de las tareas
@@ -103,7 +101,7 @@ const MyTasks = () => {
           <h1 className={styles.h1Logo}>Mis Tareas</h1>
         </div>
         {admin && <NabBar />}
-        {showForm && <CreateTask setShowForm={setShowForm} />}
+        {showForm && <CreateTask actionToDo="add" setShowForm={setShowForm} />}
         {tasks.length > 0 ? (
           <TaskList tasks={tasks} />
         ) : (

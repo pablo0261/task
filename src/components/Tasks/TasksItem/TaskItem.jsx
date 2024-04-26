@@ -8,10 +8,11 @@ import iconoDelete from "../../../images/iconDelete2.png";
 
 const TaskItem = ({ task }) => {
   const { task_id, title, description, user, status } = task;
-  const { handleUpdateTask, handleDeleteTask, admin } = useContext( TasksContext );
+  const { showForm, setShowForm, handleUpdateTask, handleDeleteTask, admin } = useContext( TasksContext );
   const [currentStatus, setCurrentStatus] = useState(status);
-  const [showForm, setShowForm] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
 
+  console.log("task.user.username", user.username)
   const handleStatusChange = (task_id, e) => {
     const newStatus = e.target.value;
     setCurrentStatus(newStatus);
@@ -27,7 +28,7 @@ const TaskItem = ({ task }) => {
     switch (status) {
       case "Pending":
         return "#a8aa17"; // Amarillo
-      case "In Progress":
+      case "In_Progress":
         return "#2e801e"; // Verde
       case "Blocked":
         return "#ad3838"; // Rojo
@@ -55,7 +56,7 @@ const TaskItem = ({ task }) => {
       <div className={styles.containerRight}>
         <div className={styles.assigned}>
           <p className={styles.assignedTitle}>Assigned To:</p>
-          <p className={styles.assignedUser}>{user.username}</p>
+          <p className={styles.assignedUser}>{task.user?.username || "Unknown"}</p>
         </div>
       </div>
       <select
@@ -65,7 +66,7 @@ const TaskItem = ({ task }) => {
         style={selectStyle}
       >
         <option value="Pending">Pending</option>
-        <option value="In Progress">In Progress</option>
+        <option value="In_Progress">In Progress</option>
         <option value="Blocked">Blocked</option>
         <option value="Completed">Completed</option>
       </select>
@@ -85,20 +86,21 @@ const TaskItem = ({ task }) => {
           />
         </div>
       )}
-      {showForm && <CreateTask setShowForm={setShowForm} taskToEdit={task} />}
+      {showForm && <CreateTask  actionToDo="edit" taskToEdit={task} />}
     </div>
   );
 };
 
 TaskItem.propTypes = {
   task: PropTypes.shape({
-    task_id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    user: PropTypes.object.isRequired,
-    status: PropTypes.oneOf(["Pending", "In Progress", "Blocked", "Completed"])
-      .isRequired,
-  }).isRequired,
+    task_id: PropTypes.number,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    user: PropTypes.shape({
+      username: PropTypes.string,
+    }),
+    status: PropTypes.oneOf(["Pending", "In_Progress", "Blocked", "Completed"]),
+  }),
 };
 
 export default TaskItem;

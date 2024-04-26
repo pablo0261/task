@@ -1,11 +1,10 @@
 import TaskItem from "../TasksItem/TaskItem.jsx";
 import style from "./TaskList.module.sass";
-import { useContext } from "react";
-import { TasksContext } from "../../../views/myTasks/MyTasksView.jsx";
+import { useSelector } from "react-redux";
 
 const TaskList = () => {
-  const { tasks } = useContext(TasksContext);
 
+  const tasks = useSelector(state => state.tasks.tasks);
   return (
     <div className={style.taskList}>
       {/* <NabBar/> */}
