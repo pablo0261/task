@@ -12,7 +12,7 @@ import {
 } from "../../../helpers/Constants";
 import { TasksContext } from "../../../views/myTasks/MyTasksView";
 
-const CreateTaskForm = ({ taskToEdit, actionToDo }) => {
+const CreateTaskForm = ({ taskToEdit, actionToDo }) => {//*verificar si actiontodo tiene sentido y se va a implementar
   const { setShowForm } = useContext(TasksContext);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.tasks.users);
@@ -28,7 +28,7 @@ const CreateTaskForm = ({ taskToEdit, actionToDo }) => {
       setStatus(taskToEdit.status);
       setAssignedTo(taskToEdit.assigned_to);
     }
-  }, [taskToEdit]);
+  }, [taskToEdit]);//*tiene sentdo el if s el useffect usa el mismo parametro apra ejecutarse?
 
   const handleSubmit = (event, actionToDo) => {
     event.preventDefault();
