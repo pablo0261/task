@@ -72,10 +72,13 @@ const deleteTask = (taskId) => {
   };
 };
 
-const updateTask = (taskId, updatedTask) => {
+const updateTask = (taskId, newTaskData) => {
+  console.log("rentre al action")
+  console.log("info que llega al action:", taskId, newTaskData)
   return async (dispatch) => {
     try {
-      const response = await axios.put(`${BASE_URL}/tasks/${taskId}`, updatedTask);
+      const response = await axios.put(`${BASE_URL}/tasks/${taskId}`, newTaskData);
+      console.log("response del action:", response)
       dispatch({
         type: UPDATE_TASK,
         payload: response.data, // Envía la tarea actualizada al reducer

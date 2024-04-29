@@ -12,7 +12,7 @@ import {
 } from "../../../helpers/Constants";
 import { TasksContext } from "../../../views/myTasks/MyTasksView";
 
-const CreateTaskForm = ({ taskToEdit, actionToDo }) => {//*verificar si actiontodo tiene sentido y se va a implementar
+const CreateTaskForm = ({ taskToEdit, actionToDo }) => {
   const { setShowForm } = useContext(TasksContext);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.tasks.users);
@@ -20,6 +20,12 @@ const CreateTaskForm = ({ taskToEdit, actionToDo }) => {//*verificar si actionto
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState(PENDING);
   const [assignedTo, setAssignedTo] = useState("");
+  const [newTaskData, setNewTaskData] = useState({
+    title: "",
+    description: "",
+    status: PENDING,
+    assigned_to: "",
+  });
 
   useEffect(() => {
     if (taskToEdit) {
@@ -28,22 +34,31 @@ const CreateTaskForm = ({ taskToEdit, actionToDo }) => {//*verificar si actionto
       setStatus(taskToEdit.status);
       setAssignedTo(taskToEdit.assigned_to);
     }
-  }, [taskToEdit]);//*tiene sentdo el if s el useffect usa el mismo parametro apra ejecutarse?
+  }, [taskToEdit]);
+
+  useEffect(() => {
+    setNewTaskData({
+      title,
+      description,
+      status,
+      assigned_to: assignedTo,
+    });
+  }, [title, description, status, assignedTo]);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newTaskData = {
-      title: title,
-      description: description,
-      status: status,
-      assigned_to: assignedTo,
-    };
     if (actionToDo === "add") {
       dispatch(addTask(newTaskData));
     } else if (actionToDo === "edit") {
       dispatch(updateTask(taskToEdit.task_id, newTaskData));
+      console.log("newTaskData", newTaskData)
     }
     setShowForm(false);
+  };
+
+  const handleUserChange = (e) => {
+    setAssignedTo(e.target.value); 
   };
 
   const handleCloseForm = () => {
@@ -95,9 +110,8 @@ const CreateTaskForm = ({ taskToEdit, actionToDo }) => {//*verificar si actionto
             <select
               className={styles.select}
               value={assignedTo}
-              onChange={(e) => setAssignedTo(e.target.value)}
+              onChange={handleUserChange}
             >
-              <option value="">Seleccione</option>
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.username}
