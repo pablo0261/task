@@ -30,7 +30,7 @@ const CreateTaskForm = ({ taskToEdit, actionToDo }) => {//*verificar si actionto
     }
   }, [taskToEdit]);//*tiene sentdo el if s el useffect usa el mismo parametro apra ejecutarse?
 
-  const handleSubmit = (event, actionToDo) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const newTaskData = {
       title: title,
@@ -40,7 +40,7 @@ const CreateTaskForm = ({ taskToEdit, actionToDo }) => {//*verificar si actionto
     };
     if (actionToDo === "add") {
       dispatch(addTask(newTaskData));
-    } else {
+    } else if (actionToDo === "edit") {
       dispatch(updateTask(taskToEdit.task_id, newTaskData));
     }
     setShowForm(false);
