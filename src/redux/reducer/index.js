@@ -15,7 +15,7 @@ const initialState = {
 
 
 const tasksReducer = (state = initialState, action) => {
-  console.log("taraeas.del.redux:",initialState.tasks);
+  // console.log("taraeas.del.redux:",initialState.tasks);
   switch (action.type) {
     case ADD_TASK:
       return {
@@ -24,6 +24,7 @@ const tasksReducer = (state = initialState, action) => {
       };
     case GET_TASK:
       return {
+        ...state,
         tasks: action.payload,
       };
     case DELETE_TASK:

@@ -3,7 +3,7 @@ import {  TasksContext  } from "../../../views/myTasks/MyTasksView";
 import PropTypes from "prop-types";
 import styles from "./TaskItem.module.sass";
 import editIcon from "../../../images/iconEdit4.png";
-import CreateTask from "../../Tasks/CreateTasks/CreatTasks";
+import EditTaskForm from "../../Tasks/EditTasks/EditTasks";
 import iconoDelete from "../../../images/iconDelete2.png";
 
 const TaskItem = ({ task }) => {
@@ -12,12 +12,12 @@ const TaskItem = ({ task }) => {
   const [currentStatus, setCurrentStatus] = useState(status);
   // const [showForm, setShowForm] = useState(false);
 
-  console.log("task.user.username", user.username)
+  // console.log("task.user.username", user.username)
   const handleStatusChange = (task_id, e) => {
     const newStatus = e.target.value;
     setCurrentStatus(newStatus);
     handleUpdateTask(task_id, newStatus);
-    console.log("task_id, newStatus", task_id, newStatus)
+    // console.log("task_id, newStatus", task_id, newStatus)
   };
 
   const toggleFormVisibility = () => {
@@ -86,7 +86,7 @@ const TaskItem = ({ task }) => {
           />
         </div>
       )}
-      {showForm && <CreateTask  actionToDo="edit" taskToEdit={task} />}
+      {showForm && <EditTaskForm  actionToDo="edit" taskToEdit={task} />}
     </div>
   );
 };

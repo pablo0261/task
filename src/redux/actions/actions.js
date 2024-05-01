@@ -6,10 +6,10 @@ import { GET_TASK, ADD_TASK, DELETE_TASK, UPDATE_TASK, GET_USERS  } from "./acti
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 
-const addTask = (task) => {
+const addTask = (newTaskData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`${BASE_URL}/tasks`, task);
+      const response = await axios.post(`${BASE_URL}/tasks`, newTaskData);
       dispatch({
         type: ADD_TASK,
         payload: response.data, 
@@ -33,7 +33,7 @@ const getTask = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get(`${BASE_URL}/tasks`);
-      console.log("ruta", `${BASE_URL}/tasks`)
+      // console.log("ruta", `${BASE_URL}/tasks`)
       
       dispatch({
         type: GET_TASK,

@@ -1,8 +1,9 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import styles from "./CreateTask.module.sass";
+import styles from "./EditTask.module.sass";
 import iconClose from "../../../images/iconClose.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { updateTask } from "../../../redux/actions/actions";
 import {
   PENDING,
   IN_PROGRESS,
@@ -11,9 +12,15 @@ import {
 } from "../../../helpers/Constants";
 import { TasksContext } from "../../../views/myTasks/MyTasksView";
 
-const CreateTaskForm = () => {
-  const { setShowForm, handleCreateTask } = useContext(TasksContext);
+const EditTaskForm = ({ taskToEdit }) => {
+  console.log("taskToEdit", taskToEdit);
+  const { setShowForm } = useContext(TasksContext);
+  const dispatch = useDispatch();
   const users = useSelector((state) => state.tasks.users);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [status, setStatus] = useState(PENDING);
+  const [assignedTo, setAssignedTo] = useState("");
   const [newTaskData, setNewTaskData] = useState({
     title: "",
     description: "",
@@ -21,32 +28,37 @@ const CreateTaskForm = () => {
     assigned_to: "",
   });
 
+  useEffect(() => {
+    if (taskToEdit) {
+      setTitle(taskToEdit.title);
+      setDescription(taskToEdit.description);
+      setStatus(taskToEdit.status);
+      setAssignedTo(taskToEdit.assigned_to);
+    }
+  }, [taskToEdit]);
+
+  useEffect(() => {
+    setNewTaskData({
+      title,
+      description,
+      status,
+      assigned_to: assignedTo,
+    });
+  }, [title, description, status, assignedTo]);
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleCreateTask(newTaskData);
+    dispatch(updateTask(taskToEdit.task_id, newTaskData));
     setShowForm(false);
-    // Limpiar los datos del formulario después de enviarlo
-    setNewTaskData({
-      title: "",
-      description: "",
-      status: PENDING,
-      assigned_to: "",
-    });
   };
 
   const handleUserChange = (e) => {
-    setNewTaskData({ ...newTaskData, assigned_to: e.target.value });
+    setAssignedTo(e.target.value); 
   };
 
   const handleCloseForm = () => {
     setShowForm(false);
-    // Limpiar los datos del formulario al cerrarlo
-    setNewTaskData({
-      title: "",
-      description: "",
-      status: PENDING,
-      assigned_to: "",
-    });
   };
 
   return (
@@ -64,30 +76,24 @@ const CreateTaskForm = () => {
             <input
               className={styles.inputTitulo}
               type="text"
-              value={newTaskData.title}
-              onChange={(e) =>
-                setNewTaskData({ ...newTaskData, title: e.target.value })
-              }
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </label>
           <label>
             Descripción:
             <textarea
               className={styles.textarea}
-              value={newTaskData.description}
-              onChange={(e) =>
-                setNewTaskData({ ...newTaskData, description: e.target.value })
-              }
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </label>
           <label>
             Estado:
             <select
               className={styles.select}
-              value={newTaskData.status}
-              onChange={(e) =>
-                setNewTaskData({ ...newTaskData, status: e.target.value })
-              }
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
             >
               <option value={PENDING}>Pendiente</option>
               <option value={IN_PROGRESS}>En proceso</option>
@@ -99,7 +105,7 @@ const CreateTaskForm = () => {
             Asignado a:
             <select
               className={styles.select}
-              value={newTaskData.assigned_to}
+              value={assignedTo}
               onChange={handleUserChange}
             >
               {users.map((user) => (
@@ -118,8 +124,8 @@ const CreateTaskForm = () => {
   );
 };
 
-CreateTaskForm.propTypes = {
+EditTaskForm.propTypes = {
   taskToEdit: PropTypes.object,
 };
 
-export default CreateTaskForm;
+export default EditTaskForm;

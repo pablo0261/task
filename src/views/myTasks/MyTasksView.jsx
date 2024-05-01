@@ -101,7 +101,7 @@ console.log("tasks", tasks)
           <h1 className={styles.h1Logo}>Mis Tareas</h1>
         </div>
         {admin && <NabBar />}
-        {showForm && <CreateTask actionToDo="add" setShowForm={setShowForm} />}
+        {showForm && <CreateTask/>}
         {tasks.length > 0 ? (
           <TaskList tasks={tasks} />
         ) : (
