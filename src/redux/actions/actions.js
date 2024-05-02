@@ -8,6 +8,7 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const addTask = (newTaskData) => {
   return async (dispatch) => {
+    console.log("newTaskData action", newTaskData)
     try {
       const response = await axios.post(`${BASE_URL}/tasks`, newTaskData);
       dispatch({
@@ -73,12 +74,10 @@ const deleteTask = (taskId) => {
 };
 
 const updateTask = (taskId, newTaskData) => {
-  console.log("rentre al action")
   console.log("info que llega al action:", taskId, newTaskData)
   return async (dispatch) => {
     try {
       const response = await axios.put(`${BASE_URL}/tasks/${taskId}`, newTaskData);
-      console.log("response del action:", response)
       dispatch({
         type: UPDATE_TASK,
         payload: response.data, // Envía la tarea actualizada al reducer

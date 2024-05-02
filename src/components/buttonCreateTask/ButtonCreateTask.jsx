@@ -3,10 +3,10 @@ import { useContext } from "react";
 import { TasksContext } from "../../views/myTasks/MyTasksView"
 
 const ButtonCreateTask = () => {
-  const { showForm, setShowForm } = useContext(TasksContext);
+  const { showCreateForm, setshowCreateForm } = useContext(TasksContext);
 
   const toggleFormVisibility = () => {
-    setShowForm(!showForm);
+    setshowCreateForm(!showCreateForm);
   };
 
   return(

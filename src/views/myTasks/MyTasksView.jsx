@@ -15,7 +15,7 @@ export const useTasks = () => useContext(TasksContext);
 const MyTasks = () => {
   const dispatch = useDispatch();
 
-  const [showForm, setShowForm] = useState(false);
+  const [showCreateForm, setshowCreateForm] = useState(false);
   const [admin, setAdmin] = useState(null); // Corregido: inicializa admin como null
   const [tasks, setTasks] = useState([]); // Corregido: estado local para almacenar las tareas
 console.log("tasks", tasks)
@@ -47,7 +47,7 @@ console.log("tasks", tasks)
   const handleCreateTask = async (newTaskData) => {
     try {
       dispatch(addTask(newTaskData)); 
-      setShowForm(false);
+      setshowCreateForm(false);
     } catch (error) {
       console.error("Error al crear la tarea:", error);
       Swal.fire({
@@ -92,8 +92,8 @@ console.log("tasks", tasks)
         handleCreateTask,
         handleDeleteTask,
         handleUpdateTask,
-        showForm,
-        setShowForm,
+        showCreateForm,
+        setshowCreateForm,
       }}
     >
       <div>
@@ -101,7 +101,7 @@ console.log("tasks", tasks)
           <h1 className={styles.h1Logo}>Mis Tareas</h1>
         </div>
         {admin && <NabBar />}
-        {showForm && <CreateTask/>}
+        {showCreateForm && <CreateTask/>}
         {tasks.length > 0 ? (
           <TaskList tasks={tasks} />
         ) : (

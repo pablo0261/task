@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styles from "./EditTask.module.sass";
 import iconClose from "../../../images/iconClose.png";
@@ -10,11 +10,9 @@ import {
   BLOCKED,
   COMPLETED,
 } from "../../../helpers/Constants";
-import { TasksContext } from "../../../views/myTasks/MyTasksView";
 
-const EditTaskForm = ({ taskToEdit }) => {
-  console.log("taskToEdit", taskToEdit);
-  const { setShowForm } = useContext(TasksContext);
+const EditTaskForm = ({ taskToEdit, setShowForm }) => {
+  console.log(" setShowForm", setShowForm);
   const dispatch = useDispatch();
   const users = useSelector((state) => state.tasks.users);
   const [title, setTitle] = useState("");
@@ -25,8 +23,9 @@ const EditTaskForm = ({ taskToEdit }) => {
     title: "",
     description: "",
     status: PENDING,
-    assigned_to: "",
+    assigned_to: "190e5b65-76fd-4849-adc1-0029fe2e89f1",
   });
+  console.log("newTaskData",newTaskData)
 
   useEffect(() => {
     if (taskToEdit) {
@@ -51,10 +50,6 @@ const EditTaskForm = ({ taskToEdit }) => {
     event.preventDefault();
     dispatch(updateTask(taskToEdit.task_id, newTaskData));
     setShowForm(false);
-  };
-
-  const handleUserChange = (e) => {
-    setAssignedTo(e.target.value); 
   };
 
   const handleCloseForm = () => {
@@ -106,7 +101,7 @@ const EditTaskForm = ({ taskToEdit }) => {
             <select
               className={styles.select}
               value={assignedTo}
-              onChange={handleUserChange}
+              onChange={(e) => setAssignedTo(e.target.value)}
             >
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
@@ -126,6 +121,7 @@ const EditTaskForm = ({ taskToEdit }) => {
 
 EditTaskForm.propTypes = {
   taskToEdit: PropTypes.object,
+  setShowForm: PropTypes.func.isRequired, 
 };
 
 export default EditTaskForm;

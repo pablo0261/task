@@ -8,16 +8,16 @@ import iconoDelete from "../../../images/iconDelete2.png";
 
 const TaskItem = ({ task }) => {
   const { task_id, title, description, user, status } = task;
-  const { showForm, setShowForm, handleUpdateTask, handleDeleteTask, admin } = useContext( TasksContext );
+  const { handleUpdateTask, handleDeleteTask, admin } = useContext( TasksContext );
   const [currentStatus, setCurrentStatus] = useState(status);
-  // const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
-  // console.log("task.user.username", user.username)
+  console.log("task.user.username", user.username)
   const handleStatusChange = (task_id, e) => {
     const newStatus = e.target.value;
     setCurrentStatus(newStatus);
     handleUpdateTask(task_id, newStatus);
-    // console.log("task_id, newStatus", task_id, newStatus)
+    console.log("task_id, newStatus", task_id, newStatus)
   };
 
   const toggleFormVisibility = () => {
@@ -86,7 +86,7 @@ const TaskItem = ({ task }) => {
           />
         </div>
       )}
-      {showForm && <EditTaskForm  actionToDo="edit" taskToEdit={task} />}
+      {showForm && <EditTaskForm taskToEdit={task} setShowForm={setShowForm} />}
     </div>
   );
 };

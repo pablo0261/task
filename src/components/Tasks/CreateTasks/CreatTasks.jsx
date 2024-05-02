@@ -12,7 +12,7 @@ import {
 import { TasksContext } from "../../../views/myTasks/MyTasksView";
 
 const CreateTaskForm = () => {
-  const { setShowForm, handleCreateTask } = useContext(TasksContext);
+  const { setshowCreateForm, handleCreateTask } = useContext(TasksContext);
   const users = useSelector((state) => state.tasks.users);
   const [newTaskData, setNewTaskData] = useState({
     title: "",
@@ -20,11 +20,12 @@ const CreateTaskForm = () => {
     status: PENDING,
     assigned_to: "",
   });
+  console.log("newTaskData", newTaskData)
 
   const handleSubmit = (event) => {
     event.preventDefault();
     handleCreateTask(newTaskData);
-    setShowForm(false);
+    setshowCreateForm(false);
     // Limpiar los datos del formulario después de enviarlo
     setNewTaskData({
       title: "",
@@ -34,12 +35,9 @@ const CreateTaskForm = () => {
     });
   };
 
-  const handleUserChange = (e) => {
-    setNewTaskData({ ...newTaskData, assigned_to: e.target.value });
-  };
 
   const handleCloseForm = () => {
-    setShowForm(false);
+    setshowCreateForm(false);
     // Limpiar los datos del formulario al cerrarlo
     setNewTaskData({
       title: "",
@@ -100,7 +98,8 @@ const CreateTaskForm = () => {
             <select
               className={styles.select}
               value={newTaskData.assigned_to}
-              onChange={handleUserChange}
+              onChange={(e) => 
+                setNewTaskData({ ...newTaskData, assigned_to: e.target.value })}
             >
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
