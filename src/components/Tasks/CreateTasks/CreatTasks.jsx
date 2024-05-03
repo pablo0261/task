@@ -20,7 +20,6 @@ const CreateTaskForm = () => {
     status: PENDING,
     assigned_to: "",
   });
-  console.log("newTaskData", newTaskData)
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -101,6 +100,7 @@ const CreateTaskForm = () => {
               onChange={(e) => 
                 setNewTaskData({ ...newTaskData, assigned_to: e.target.value })}
             >
+              <option value="">Seleccionar</option>
               {users.map((user) => (
                 <option key={user.id} value={user.id}>
                   {user.username}

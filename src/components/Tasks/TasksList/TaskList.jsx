@@ -10,7 +10,7 @@ const TaskList = () => {
       {/* <NabBar/> */}
       <div className={style.ulTask}>
         {tasks.map(task => (
-           <TaskItem key={task.task_id} task={task} />
+          <TaskItem key={task.task_id} task={task} />
         ))}
       </div>
     </div>

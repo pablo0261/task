@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {  TasksContext  } from "../../../views/myTasks/MyTasksView";
 import PropTypes from "prop-types";
 import styles from "./TaskItem.module.sass";
@@ -12,12 +12,25 @@ const TaskItem = ({ task }) => {
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
 
-  console.log("task.user.username", user.username)
+  const name = task.user?.username || 'Unknown';
+
+  useEffect(() => {
+    setCurrentStatus(task.status);
+  }, [task]);
+
   const handleStatusChange = (task_id, e) => {
     const newStatus = e.target.value;
     setCurrentStatus(newStatus);
-    handleUpdateTask(task_id, newStatus);
-    console.log("task_id, newStatus", task_id, newStatus)
+    const updatedTask = {
+      task_id,
+      title,
+      description,
+      user,
+      status: newStatus,
+    };
+    handleUpdateTask(task_id, updatedTask);
+    console.log("newStatus", newStatus);
+    console.log("task_id", task_id);
   };
 
   const toggleFormVisibility = () => {
@@ -56,7 +69,7 @@ const TaskItem = ({ task }) => {
       <div className={styles.containerRight}>
         <div className={styles.assigned}>
           <p className={styles.assignedTitle}>Assigned To:</p>
-          <p className={styles.assignedUser}>{task.user?.username || "Unknown"}</p>
+          <p className={styles.assignedUser}>{name? name : "Unknown"}</p>
         </div>
       </div>
       <select
