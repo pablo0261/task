@@ -7,6 +7,7 @@
   background-color: $sistemColor
   display: flex
   width: 95vw
+  height: fit-content
   margin: auto
   border: 1px solid $primaryColor
   border-radius: 10px
@@ -17,23 +18,39 @@
     box-shadow:  3px 3px 7px rgba($secondaryColor, 0.705)
 
 .containerLeft
-  display: flex
+  display: block
   width: 50%
+  height: fit-content
   padding-block: 5px
   min-width: 350px
   border-right: solid $secondaryColor 3px
+  overflow: hidden
+  word-wrap: break-word
 
 .title
+  border: solid 3px red
   color: $secondaryColor
   font-size: 28px
   margin-inline: 10px
-  width: 60%
+  width: auto
+  word-wrap: break-word
 
 .description
+  border: solid 3px blue
   color: $textColor
   margin-inline: 10px
   color:  rgba($textColor, .6)
-  width: 90%
+  width: auto
+  word-wrap: break-word
+  max-height: 3em
+  overflow: hidden
+  transition: max-height 0.5s ease
+
+.taskItem:hover .description
+  max-height: none
+
+.containerLeft:hover
+  height: auto  
 
 .containerRight
   display: flex
