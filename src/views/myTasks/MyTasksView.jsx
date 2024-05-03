@@ -17,8 +17,8 @@ const MyTasks = () => {
 
   const [showCreateForm, setshowCreateForm] = useState(false);
   const [admin, setAdmin] = useState(null); // Corregido: inicializa admin como null
+  const [userLoged, setuserLoged] = useState(""); 
   const [tasks, setTasks] = useState([]); // Corregido: estado local para almacenar las tareas
-console.log("tasks", tasks)
   const tasksState = useSelector(state => state.tasks.tasks);
  
   useEffect(() => {
@@ -29,6 +29,7 @@ console.log("tasks", tasks)
       try {
         const decodedToken = jwtDecode(tokenStorage);
         setAdmin(decodedToken.typeAdmin);
+        setuserLoged(decodedToken.username);
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -99,6 +100,7 @@ console.log("tasks", tasks)
       <div>
         <div className={styles.logo}>
           <h1 className={styles.h1Logo}>Mis Tareas</h1>
+          <p className={styles.userLoged}><strong>User:</strong> {userLoged}</p>
         </div>
         {admin && <NabBar />}
         {showCreateForm && <CreateTask/>}

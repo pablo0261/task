@@ -21,14 +21,13 @@
   display: block
   width: 50%
   height: fit-content
-  padding-block: 5px
+  padding-block: 3px
   min-width: 350px
   border-right: solid $secondaryColor 3px
   overflow: hidden
   word-wrap: break-word
 
 .title
-  border: solid 3px red
   color: $secondaryColor
   font-size: 28px
   margin-inline: 10px
@@ -36,17 +35,16 @@
   word-wrap: break-word
 
 .description
-  border: solid 3px blue
   color: $textColor
   margin-inline: 10px
   color:  rgba($textColor, .6)
   width: auto
-  word-wrap: break-word
-  max-height: 3em
+  word-wrap:  break-word
+  max-height: 1em
   overflow: hidden
   transition: max-height 0.5s ease
 
-.taskItem:hover .description
+.taskItem.expanded .description
   max-height: none
 
 .containerLeft:hover

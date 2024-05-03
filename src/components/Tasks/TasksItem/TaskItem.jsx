@@ -11,12 +11,13 @@ const TaskItem = ({ task }) => {
   const { handleUpdateTask, handleDeleteTask, admin } = useContext( TasksContext );
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const name = task.user?.username || 'Unknown';
 
   useEffect(() => {
     setCurrentStatus(task.status);
-  }, [task]);
+  }, [task.status]);
 
   const handleStatusChange = (task_id, e) => {
     const newStatus = e.target.value;
@@ -35,6 +36,10 @@ const TaskItem = ({ task }) => {
 
   const toggleFormVisibility = () => {
     setShowForm(!showForm);
+  };
+
+  const toggleDescription = () => {
+    setExpanded(!expanded);
   };
 
   const getStatusColor = (status) => {
@@ -58,7 +63,7 @@ const TaskItem = ({ task }) => {
   };
 
   return (
-    <div key={task_id} className={styles.taskItem}>
+    <div key={task_id} className={`${styles.taskItem} ${expanded ? styles.expanded : ''}`} onClick={toggleDescription}>
       <div className={styles.containerLeft}>
         <h2 className={styles.title}>{title}</h2>
         <div className={styles.description}>
