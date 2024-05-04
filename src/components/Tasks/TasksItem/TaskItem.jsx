@@ -45,12 +45,13 @@ const TaskItem = ({ task }) => {
       status: newStatus,
     };
     handleUpdateTask(task_id, updatedTask);
-    console.log("task_id", task_id);
   };
-  console.log("taskData", taskData);
 
   const toggleFormVisibility = () => {
     setShowForm(!showForm);
+  };
+
+  const toggleUploadFiled = () => {
   };
 
   const toggleDescription = () => {
@@ -90,7 +91,7 @@ const TaskItem = ({ task }) => {
             className={styles.uploadButton}
             src={uploadFiledIcon}
             alt={"Edit"}
-            onClick={toggleFormVisibility}
+            onClick={toggleUploadFiled}
           />
         </div>
         <div className={styles.description}>

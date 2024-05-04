@@ -10,7 +10,6 @@ function FormikInput({ name, label, securetextentry, ...props }) {
             <label htmlFor={name} className={style.label}>
                 {label}:
             </label>
-            <h1>SOY EL FORMIK</h1>
             <input
                 id={name}
                 type={securetextentry ? 'password' : 'text'}
