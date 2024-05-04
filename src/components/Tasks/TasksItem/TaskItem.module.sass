@@ -27,6 +27,25 @@
   overflow: hidden
   word-wrap: break-word
 
+.containerLeftTitleLine
+  hight: 20px
+  justify-content: space-between
+  display: flex
+
+.uploadButton
+  display: flex
+  margin-right: 10px
+  height: 30px
+  padding: 3px
+  border-radius: 50%
+  cursor: pointer
+  transition: background-color 0.3s ease
+  &:hover 
+    background-color: $yellowColor
+  &:active 
+    background-color: rgba($yellowColor, 0.7)
+    transform: scale(0.95)
+
 .title
   color: $secondaryColor
   font-size: 28px

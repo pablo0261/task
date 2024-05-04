@@ -1,23 +1,38 @@
 import { useContext, useState, useEffect } from "react";
-import {  TasksContext  } from "../../../views/myTasks/MyTasksView";
+import { TasksContext } from "../../../views/myTasks/MyTasksView";
 import PropTypes from "prop-types";
 import styles from "./TaskItem.module.sass";
 import editIcon from "../../../images/iconEdit4.png";
+import uploadFiledIcon from "../../../images/uploadFileIcon.png";
 import EditTaskForm from "../../Tasks/EditTasks/EditTasks";
 import iconoDelete from "../../../images/iconDelete2.png";
 
 const TaskItem = ({ task }) => {
   const { task_id, title, description, user, status } = task;
-  const { handleUpdateTask, handleDeleteTask, admin } = useContext( TasksContext );
+  const { handleUpdateTask, handleDeleteTask, admin } =
+    useContext(TasksContext);
   const [currentStatus, setCurrentStatus] = useState(status);
   const [showForm, setShowForm] = useState(false);
   const [expanded, setExpanded] = useState(false);
-
-  const name = task.user?.username || 'Unknown';
+  const [taskData, setTaskData] = useState({
+    task_id: task_id,
+    title: title,
+    description: description,
+    user: user,
+    status: status,
+  });
+  const name = task.user?.username || "Unknown";
 
   useEffect(() => {
     setCurrentStatus(task.status);
-  }, [task.status]);
+    setTaskData({
+      task_id: task_id,
+      title: title,
+      description: description,
+      user: user,
+      status: status,
+    });
+  }, [task]);
 
   const handleStatusChange = (task_id, e) => {
     const newStatus = e.target.value;
@@ -30,9 +45,9 @@ const TaskItem = ({ task }) => {
       status: newStatus,
     };
     handleUpdateTask(task_id, updatedTask);
-    console.log("newStatus", newStatus);
     console.log("task_id", task_id);
   };
+  console.log("taskData", taskData);
 
   const toggleFormVisibility = () => {
     setShowForm(!showForm);
@@ -59,22 +74,34 @@ const TaskItem = ({ task }) => {
 
   const selectStyle = {
     backgroundColor: getStatusColor(currentStatus), // Cambia el fondo
-    color: "#fff", 
+    color: "#fff",
   };
 
   return (
-    <div key={task_id} className={`${styles.taskItem} ${expanded ? styles.expanded : ''}`} onClick={toggleDescription}>
+    <div
+      key={task_id}
+      className={`${styles.taskItem} ${expanded ? styles.expanded : ""}`}
+      onClick={toggleDescription}
+    >
       <div className={styles.containerLeft}>
-        <h2 className={styles.title}>{title}</h2>
+        <div className={styles.containerLeftTitleLine}>
+          <h2 className={styles.title}>{taskData.title}</h2>
+          <img
+            className={styles.uploadButton}
+            src={uploadFiledIcon}
+            alt={"Edit"}
+            onClick={toggleFormVisibility}
+          />
+        </div>
         <div className={styles.description}>
-          <p>{description}</p>{" "}
+          <p>{taskData.description}</p>{" "}
         </div>
       </div>
 
       <div className={styles.containerRight}>
         <div className={styles.assigned}>
           <p className={styles.assignedTitle}>Assigned To:</p>
-          <p className={styles.assignedUser}>{name? name : "Unknown"}</p>
+          <p className={styles.assignedUser}>{name ? name : "Unknown"}</p>
         </div>
       </div>
       <select
