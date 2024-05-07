@@ -89,24 +89,22 @@ const TaskItem = ({ task }) => {
       <div className={styles.containerLeft}>
         <div className={styles.containerLeftTitleLine}>
           <h2 className={styles.title}>{taskData.title}</h2>
-          <img
-            className={styles.enlargeCard}
-            src={enlargeIcon}
-            alt={"Edit"}
-            onClick={toggleUploadFiled}
-          />
-          <img
+          {expanded? (
+            <img
             className={styles.decreaseCard}
             src={decreaseIcon}
             alt={"Edit"}
             onClick={toggleUploadFiled}
           />
+          ): (
           <img
-            className={styles.uploadButton}
-            src={uploadFiledIcon}
-            alt={"Edit"}
-            onClick={toggleUploadFiled}
-          />
+          className={styles.enlargeCard}
+          src={enlargeIcon}
+          alt={"Edit"}
+          onClick={toggleUploadFiled}
+        />
+          )}
+          
         </div>
         <div className={styles.description}>
           <p>{taskData.description}</p>{" "}
@@ -132,6 +130,12 @@ const TaskItem = ({ task }) => {
       </select>
       {admin && (
         <div className={styles.divButton}>
+          <img
+            className={styles.uploadButton}
+            src={uploadFiledIcon}
+            alt={"Edit"}
+            onClick={toggleUploadFiled}
+          />
           <img
             className={styles.iconDelete}
             src={iconoDelete}

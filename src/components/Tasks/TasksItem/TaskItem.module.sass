@@ -32,19 +32,7 @@
   justify-content: space-between
   display: flex
 
-.uploadButton
-  display: flex
-  margin-right: 10px
-  height: 30px
-  padding: 3px
-  border-radius: 50%
-  cursor: pointer
-  transition: background-color 0.3s ease
-  &:hover 
-    background-color: $yellowColor
-  &:active 
-    background-color: rgba($yellowColor, 0.7)
-    transform: scale(0.95)
+
 
 .title
   color: $secondaryColor
@@ -54,12 +42,17 @@
   word-wrap: break-word
   
 .enlargeCard
-  border: solid 4px red
   display: flex
-  align-items: center
-  position: relative
-  
+  position: absolute
+  left: 25%
+  bottom: 0px
+  height: 20px
 
+.decreaseCard  
+  display: flex
+  position: absolute
+  left: 25%
+  bottom: 2px
   height: 20px
 
 .description
@@ -122,6 +115,21 @@
   width: fit-content
   border-radius: 50px
 
+.uploadButton
+  position: absolute
+  right: 100px
+  height: 30px
+  display: flex
+  padding: 3px
+  border-radius: 50%
+  cursor: pointer
+  transition: background-color 0.3s ease
+  &:hover 
+    background-color: $yellowColor
+  &:active 
+    background-color: rgba($yellowColor, 0.7)
+    transform: scale(0.95)
+      
 .iconDelete
   position: absolute
   right: 50px
@@ -164,6 +172,10 @@
     width: 90%
     align-items: center
 
+  .uploadButton  
+    right: 2px
+    top: 100px
+
   .iconDelete
     right: 2px
     top: 50px
@@ -175,15 +187,35 @@
   .status
     margin-bottom: 10px
 
+  .enlargeCard
+    left: 50%
+
+  .decreaseCard  
+    left: 50%
+
 @media (max-width: 350px) 
   .taskItem 
     padding-top: 20px
 
   .assigned
     display: block  
+
   .divButton
     display: block   
 
   .iconDelete
     right: 50px
     top: 0px  
+
+  .uploadButton  
+    right: 100px
+    top: 0px  
+
+  .status
+    margin-bottom: 30px  
+
+  .enlargeCard
+    left: 45%
+
+  .decreaseCard  
+    left: 45%  
