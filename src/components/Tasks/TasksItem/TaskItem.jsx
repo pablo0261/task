@@ -6,6 +6,8 @@ import editIcon from "../../../images/iconEdit4.png";
 import uploadFiledIcon from "../../../images/uploadFileIcon.png";
 import EditTaskForm from "../../Tasks/EditTasks/EditTasks";
 import iconoDelete from "../../../images/iconDelete2.png";
+import enlargeIcon from "../../../images/enlargeIcon.png";
+import decreaseIcon from "../../../images/decreaseIcon.png";
 
 const TaskItem = ({ task }) => {
   const { task_id, title, description, user, status } = task;
@@ -87,6 +89,18 @@ const TaskItem = ({ task }) => {
       <div className={styles.containerLeft}>
         <div className={styles.containerLeftTitleLine}>
           <h2 className={styles.title}>{taskData.title}</h2>
+          <img
+            className={styles.enlargeCard}
+            src={enlargeIcon}
+            alt={"Edit"}
+            onClick={toggleUploadFiled}
+          />
+          <img
+            className={styles.decreaseCard}
+            src={decreaseIcon}
+            alt={"Edit"}
+            onClick={toggleUploadFiled}
+          />
           <img
             className={styles.uploadButton}
             src={uploadFiledIcon}
