@@ -10,22 +10,7 @@ import './App.module.sass'
 
 
 function App() {
-  //   const { pathname } = useLocation()
-  
-  //   useEffect(()=>{
-    //     if (pathname === "/") {
-      //       document.body.className = "access";
-      //    }
-      //     if (pathname === "/logIn") {
-        //       document.body.className = "access";
-        //    }
-        //    if (pathname === "/signIn") {
-          //     document.body.className = "access";
-          //  }
-          //   },[pathname])
-          
 
-          
   return (
        <div>
       {/* <NavBar></NavBar> */}
