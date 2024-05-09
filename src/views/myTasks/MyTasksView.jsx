@@ -75,6 +75,8 @@ const MyTasks = () => {
   const handleUpdateTask = (taskId, updatedTask) => {
     try {
       dispatch(updateTask(taskId, updatedTask)); 
+      console.log("taskId", taskId)
+      console.log("updatedTask", updatedTask)
     } catch (error) {
       console.error("Error al actualizar la tarea:", error);
       Swal.fire({

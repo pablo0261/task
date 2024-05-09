@@ -3,18 +3,16 @@ import { TasksContext } from "../../../views/myTasks/MyTasksView";
 import PropTypes from "prop-types";
 import styles from "./TaskItem.module.sass";
 import editIcon from "../../../images/iconEdit4.png";
-import uploadFiledIcon from "../../../images/uploadFileIcon.png";
 import EditTaskForm from "../../Tasks/EditTasks/EditTasks";
 import iconoDelete from "../../../images/iconDelete2.png";
 import enlargeIcon from "../../../images/enlargeIcon.png";
 import decreaseIcon from "../../../images/decreaseIcon.png";
-import CloudinaryUploadWidget from '../../cloudinary/CloudinaryUploadWidget.jsx'
+import CloudinaryUploadWidget from "../../cloudinary/CloudinaryUploadWidget.jsx";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
-
 const TaskItem = ({ task }) => {
-  const { task_id, title, description, user, status } = task;
+  const { task_id, title, description, user, status, upload } = task;
   const { handleUpdateTask, handleDeleteTask, admin } =
     useContext(TasksContext);
   const [currentStatus, setCurrentStatus] = useState(status);
@@ -26,17 +24,18 @@ const TaskItem = ({ task }) => {
     description: description,
     user: user,
     status: status,
+    upload: upload,
   });
   const name = task.user?.username || "Unknown";
-
-//*-------CLOUDINARY---------//
+console.log("taskdata:", taskData)
+  //*-------CLOUDINARY---------//
 
   const [publicId, setPublicId] = useState("");
   // Replace with your own cloud name
   const [cloudName] = useState("hzxyensd5");
   // Replace with your own upload preset
   const [uploadPreset] = useState("aoh4fpwm");
-
+  console.log("publicId:", publicId);
   // Upload Widget Configuration
   // Remove the comments from the code below to add
   // additional functionality.
@@ -47,7 +46,7 @@ const TaskItem = ({ task }) => {
 
   const [uwConfig] = useState({
     cloudName,
-    uploadPreset
+    uploadPreset,
     // cropping: true, //add a cropping step
     // showAdvancedOptions: true,  //add advanced options (public_id and tag)
     // sources: [ "local", "url"], // restrict the upload sources to URL and local files
@@ -64,15 +63,13 @@ const TaskItem = ({ task }) => {
   // Create a Cloudinary instance and set your cloud name.
   const cld = new Cloudinary({
     cloud: {
-      cloudName
-    }
+      cloudName,
+    },
   });
 
   const myImage = cld.image(publicId);
 
   //*-------HASTA AQUI CLOUDINARY---------//
-
-
 
   useEffect(() => {
     setCurrentStatus(task.status);
@@ -82,8 +79,18 @@ const TaskItem = ({ task }) => {
       description: description,
       user: user,
       status: status,
+      upload: publicId,
     });
   }, [task]);
+
+  useEffect(() => {
+    setCurrentStatus(task.status);
+    setTaskData(prevTaskData => ({
+      ...prevTaskData,
+      upload: publicId,
+    }));
+    handleStatusChange(task_id);
+  }, [publicId]);
 
   const handleStatusChange = (task_id, e) => {
     const newStatus = e.target.value;
@@ -94,15 +101,13 @@ const TaskItem = ({ task }) => {
       description,
       user,
       status: newStatus,
+      upload: publicId,
     };
     handleUpdateTask(task_id, updatedTask);
   };
 
   const toggleFormVisibility = () => {
     setShowForm(!showForm);
-  };
-
-  const toggleUploadFiled = () => {
   };
 
   const toggleDescription = () => {
@@ -129,33 +134,29 @@ const TaskItem = ({ task }) => {
     color: "#fff",
   };
 
-
-
   return (
     <div
       key={task_id}
       className={`${styles.taskItem} ${expanded ? styles.expanded : ""}`}
-      onClick={toggleDescription}
     >
       <div className={styles.containerLeft}>
         <div className={styles.containerLeftTitleLine}>
           <h2 className={styles.title}>{taskData.title}</h2>
-          {expanded? (
+          {expanded ? (
             <img
-            className={styles.decreaseCard}
-            src={decreaseIcon}
-            alt={"Edit"}
-            onClick={toggleUploadFiled}
-          />
-          ): (
-          <img
-          className={styles.enlargeCard}
-          src={enlargeIcon}
-          alt={"Edit"}
-          onClick={toggleUploadFiled}
-        />
+              className={styles.decreaseCard}
+              src={decreaseIcon}
+              alt={"Edit"}
+              onClick={toggleDescription}
+            />
+          ) : (
+            <img
+              className={styles.enlargeCard}
+              src={enlargeIcon}
+              alt={"Edit"}
+              onClick={toggleDescription}
+            />
           )}
-          
         </div>
         <div className={styles.description}>
           <p>{taskData.description}</p>{" "}
@@ -181,14 +182,11 @@ const TaskItem = ({ task }) => {
       </select>
       {admin && (
         <div className={styles.divButton}>
-          <img
-            className={styles.uploadButton}
-            src={uploadFiledIcon}
-            uwConfig={uwConfig} //*CLOUDINARY
-            setPublicId={setPublicId} //*CLOUDINARY
-            alt={"Edit"}
-            onClick={toggleUploadFiled}
+          <CloudinaryUploadWidget
+            uwConfig={uwConfig}
+            setPublicId={setPublicId}
           />
+
           <img
             className={styles.iconDelete}
             src={iconoDelete}
@@ -212,6 +210,7 @@ TaskItem.propTypes = {
   task: PropTypes.shape({
     task_id: PropTypes.number,
     title: PropTypes.string,
+    upload: PropTypes.string,
     description: PropTypes.string,
     user: PropTypes.shape({
       username: PropTypes.string,

@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-
+import uploadFiledIcon from '../../images/uploadFileIcon.png'
+import styles from './cloudinary.module.sass'
 // Create a context to manage the script loading state
 const CloudinaryScriptContext = createContext();
 
@@ -49,13 +50,14 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
 
   return (
     <CloudinaryScriptContext.Provider value={{ loaded }}>
-      <button
+      <img
         id="upload_widget"
-        className="cloudinary-button"
+        src={uploadFiledIcon}
+        alt={"Edit"}
+        className={styles.uploadButton}
         onClick={initializeCloudinaryWidget}
-      >
-        Upload
-      </button>
+      />
+     
     </CloudinaryScriptContext.Provider>
   );
 }
