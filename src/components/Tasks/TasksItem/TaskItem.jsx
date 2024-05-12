@@ -93,17 +93,19 @@ console.log("taskdata:", taskData)
   }, [publicId]);
 
   const handleStatusChange = (task_id, e) => {
-    const newStatus = e.target.value;
-    setCurrentStatus(newStatus);
-    const updatedTask = {
-      task_id,
-      title,
-      description,
-      user,
-      status: newStatus,
-      upload: publicId,
-    };
-    handleUpdateTask(task_id, updatedTask);
+    if (e) {
+      const newStatus = e.target.value;
+      setCurrentStatus(newStatus);
+      const updatedTask = {
+        task_id,
+        title,
+        description,
+        user,
+        status: newStatus,
+        upload: publicId,
+      };
+      handleUpdateTask(task_id, updatedTask);
+    }
   };
 
   const toggleFormVisibility = () => {
