@@ -71,7 +71,7 @@ console.log("taskdata:", taskData)
 
   //*-------HASTA AQUI CLOUDINARY---------//
 
-  useEffect(() => {
+  useEffect(() => {//* Actualiza la card cada vez que cambia los valores el padre
     setCurrentStatus(task.status);
     setTaskData({
       task_id: task_id,
@@ -83,16 +83,17 @@ console.log("taskdata:", taskData)
     });
   }, [task]);
 
-  useEffect(() => {
+  useEffect(() => {//* Actualiza la card cuando se carga un documento a la card
     setCurrentStatus(task.status);
     setTaskData(prevTaskData => ({
       ...prevTaskData,
       upload: publicId,
     }));
     handleStatusChange(task_id);
+    console.log("Entre al useffect 2:", task_id);
   }, [publicId]);
 
-  const handleStatusChange = (task_id, e) => {
+  const handleStatusChange = (task_id, e) => {//*actualiza los valores cada vez que se produce un cambio en la card y los envia al redux
     if (e) {
       const newStatus = e.target.value;
       setCurrentStatus(newStatus);
@@ -105,6 +106,9 @@ console.log("taskdata:", taskData)
         upload: publicId,
       };
       handleUpdateTask(task_id, updatedTask);
+      console.log("Entre al handleStatusChange:", task_id, e, updatedTask);
+    } else{
+      handleUpdateTask(task_id, taskData);
     }
   };
 
