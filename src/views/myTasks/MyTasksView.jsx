@@ -74,36 +74,7 @@ const MyTasks = () => {
 
   const handleUpdateTask = (taskId, updatedTask) => {
     try {
-      // Envía el ID de la tarea como un parámetro de la URL
-      const url = `/api/tasks/${taskId}`;
-      // Envía los datos de la tarea en el cuerpo de la solicitud
-      const options = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedTask),
-      };
-  
-      fetch(url, options)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Error al actualizar la tarea");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log("Tarea actualizada con éxito:", data);
-          // Aquí podrías realizar otras acciones después de actualizar la tarea
-        })
-        .catch((error) => {
-          console.error("Error al actualizar la tarea:", error);
-          Swal.fire({
-            icon: "error",
-            title: "Error al actualizar la tarea",
-            text: error.message,
-          });
-        });
+      dispatch(updateTask(taskId, updatedTask)); // Llama a la acción del Redux para actualizar la tarea
     } catch (error) {
       console.error("Error al actualizar la tarea:", error);
       Swal.fire({
@@ -113,7 +84,7 @@ const MyTasks = () => {
       });
     }
   };
-  
+   
 
   return (
     <TasksContext.Provider

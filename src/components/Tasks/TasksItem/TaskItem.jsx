@@ -216,12 +216,12 @@ TaskItem.propTypes = {
   task: PropTypes.shape({
     task_id: PropTypes.number,
     title: PropTypes.string,
-    upload: PropTypes.string,
     description: PropTypes.string,
     user: PropTypes.shape({
       username: PropTypes.string,
     }),
     status: PropTypes.oneOf(["Pending", "In_Progress", "Blocked", "Completed"]),
+    upload: PropTypes.string,
   }),
 };
 
