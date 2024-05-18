@@ -74,6 +74,7 @@ const MyTasks = () => {
 
   const handleUpdateTask = (taskId, updatedTask) => {
     try {
+      console.log("entre al handleUpdateTask:",taskId, updatedTask)
       dispatch(updateTask(taskId, updatedTask)); // Llama a la acción del Redux para actualizar la tarea
     } catch (error) {
       console.error("Error al actualizar la tarea:", error);

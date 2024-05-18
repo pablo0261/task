@@ -30,37 +30,20 @@ const TaskItem = ({ task }) => {
 console.log("taskdata:", taskData)
   //*-------CLOUDINARY---------//
 
-  const [publicId, setPublicId] = useState("");
-  // Replace with your own cloud name
+  const [publicId, setPublicId] = useState(upload);
   const [cloudName] = useState("hzxyensd5");
-  // Replace with your own upload preset
   const [uploadPreset] = useState("aoh4fpwm");
   console.log("publicId:", publicId);
-  // Upload Widget Configuration
-  // Remove the comments from the code below to add
-  // additional functionality.
-  // Note that these are only a few examples, to see
-  // the full list of possible parameters that you
-  // can add see:
-  //   https://cloudinary.com/documentation/upload_widget_reference
 
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
-    // cropping: true, //add a cropping step
-    // showAdvancedOptions: true,  //add advanced options (public_id and tag)
-    // sources: [ "local", "url"], // restrict the upload sources to URL and local files
     // multiple: false,  //restrict upload to a single file
-    // folder: "user_images", //upload files to the specified folder
-    // tags: ["users", "profile"], //add the given tags to the uploaded files
-    // context: {alt: "user_uploaded"}, //add the given context data to the uploaded files
-    // clientAllowedFormats: ["images"], //restrict uploading to image files only
     // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
     // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
     // theme: "purple", //change to a purple theme
   });
 
-  // Create a Cloudinary instance and set your cloud name.
   const cld = new Cloudinary({
     cloud: {
       cloudName,
@@ -79,37 +62,40 @@ console.log("taskdata:", taskData)
       description: description,
       user: user,
       status: status,
-      upload: publicId,
+      upload: task.upload || "",
     });
   }, [task]);
 
-  useEffect(() => {//* Actualiza la card cuando se carga un documento a la card
-    setCurrentStatus(task.status);
-    setTaskData(prevTaskData => ({
-      ...prevTaskData,
-      upload: publicId,
-    }));
-    handleStatusChange(task_id);
-    console.log("Entre al useffect 2:", task_id);
-  }, [publicId]);
-
-  const handleStatusChange = (task_id, e) => {//*actualiza los valores cada vez que se produce un cambio en la card y los envia al redux
-    if (e) {
-      const newStatus = e.target.value;
-      setCurrentStatus(newStatus);
-      const updatedTask = {
-        task_id,
-        title,
-        description,
-        user,
-        status: newStatus,
+  useEffect(() => {
+    if (publicId) {
+      setTaskData(prevTaskData => ({
+        ...prevTaskData,
         upload: publicId,
-      };
-      handleUpdateTask(task_id, updatedTask);
-      console.log("Entre al handleStatusChange:", task_id, e, updatedTask);
-    } else{
+      }));
       handleUpdateTask(task_id, taskData);
     }
+  }, [publicId]);
+
+  // useEffect(() => {//* Actualiza la card cuando se carga un documento a la card
+  //   setCurrentStatus(task.status);
+  //   setTaskData(prevTaskData => ({
+  //     ...prevTaskData,
+  //     upload: publicId,
+  //   }));
+  //   handleStatusChange(task_id);
+  //   console.log("Entre al useffect 2:", task_id);
+  // }, [publicId]);
+
+  const handleStatusChange = (task_id, e) => {
+    const newStatus = e ? e.target.value : currentStatus;
+    const updatedTask = {
+      ...taskData,
+      status: newStatus,
+      upload: publicId,
+    };
+    setCurrentStatus(newStatus);
+    handleUpdateTask(task_id, updatedTask);
+    console.log("Entre al handleStatusChange:", task_id, e, updatedTask);
   };
 
   const toggleFormVisibility = () => {
