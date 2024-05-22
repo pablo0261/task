@@ -14,12 +14,11 @@ export const useTasks = () => useContext(TasksContext);
 
 const MyTasks = () => {
   const dispatch = useDispatch();
+  const tasksState = useSelector(state => state.tasks.tasks);
 
   const [showCreateForm, setshowCreateForm] = useState(false);
-  const [admin, setAdmin] = useState(null); // Corregido: inicializa admin como null
+  const [admin, setAdmin] = useState(null); 
   const [userLoged, setuserLoged] = useState(""); 
-  const [tasks, setTasks] = useState([]); // Corregido: estado local para almacenar las tareas
-  const tasksState = useSelector(state => state.tasks.tasks);
  
   useEffect(() => {
     dispatch(getTask());
@@ -38,12 +37,7 @@ const MyTasks = () => {
         });
       }
     }
-  }, []); // Corregido: agregado admin a las dependencias de useEffect
-
-  useEffect(() => {
-    // Actualizar el estado local de las tareas cuando cambie el estado global de las tareas
-    setTasks(tasksState);
-  }, [tasksState]); // Corregido: cambiar la dependencia a tasksState
+  }, []); 
 
   const handleCreateTask = async (newTaskData) => {
     try {
@@ -91,7 +85,7 @@ const MyTasks = () => {
     <TasksContext.Provider
       value={{
         admin,
-        tasks,
+        tasks: tasksState,
         handleCreateTask,
         handleDeleteTask,
         handleUpdateTask,
@@ -105,9 +99,9 @@ const MyTasks = () => {
           <p className={styles.userLoged}><strong>User:</strong> {userLoged}</p>
         </div>
         {admin && <NabBar />}
-        {showCreateForm && <CreateTask/>}
-        {tasks.length > 0 ? (
-          <TaskList tasks={tasks} />
+        {showCreateForm && <CreateTask />}
+        {tasksState.length > 0 ? (
+          <TaskList tasks={tasksState} />
         ) : (
           <p className={styles.noTasks}>No hay tareas asignadas.</p>
         )}

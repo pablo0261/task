@@ -4,7 +4,7 @@ import styles from './cloudinary.module.sass'
 // Create a context to manage the script loading state
 const CloudinaryScriptContext = createContext();
 
-function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
+function CloudinaryUploadWidget({ uwConfig, setPublicId, onUploadSuccess }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -33,7 +33,9 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId }) {
         (error, result) => {
           if (!error && result && result.event === "success") {
             console.log("Done! Here is the image info: ", result.info);
-            setPublicId(result.info.public_id);
+            const publicId = result.info.public_id;
+            setPublicId(publicId);
+            onUploadSuccess(publicId);
           }
         }
       );

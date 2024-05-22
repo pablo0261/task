@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useMemo, useCallback, useContext, useState, useEffect } from "react";
 import { TasksContext } from "../../../views/myTasks/MyTasksView";
 import PropTypes from "prop-types";
 import styles from "./TaskItem.module.sass";
@@ -38,10 +38,6 @@ console.log("taskdata:", taskData)
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
-    // multiple: false,  //restrict upload to a single file
-    // maxImageFileSize: 2000000,  //restrict file size to less than 2MB
-    // maxImageWidth: 2000, //Scales the image down to a width of 2000 pixels before uploading
-    // theme: "purple", //change to a purple theme
   });
 
   const cld = new Cloudinary({
@@ -54,46 +50,34 @@ console.log("taskdata:", taskData)
 
   //*-------HASTA AQUI CLOUDINARY---------//
 
-  useEffect(() => {//* Actualiza la card cada vez que cambia los valores el padre
+  useEffect(() => {
     setCurrentStatus(task.status);
-    setTaskData({
-      task_id: task_id,
-      title: title,
-      description: description,
-      user: user,
-      status: status,
-      upload: task.upload || "",
-    });
+    setTaskData(task);
   }, [task]);
 
-  useEffect(() => {
-    if (publicId) {
-      setTaskData(prevTaskData => ({
-        ...prevTaskData,
-        upload: publicId,
-      }));
-      handleUpdateTask(task_id, taskData);
-    }
-  }, [publicId]);
+  // useEffect(() => {
+  //   setPublicId(taskData.upload);
+  // }, [taskData.upload]);
 
-  // useEffect(() => {//* Actualiza la card cuando se carga un documento a la card
-  //   setCurrentStatus(task.status);
-  //   setTaskData(prevTaskData => ({
-  //     ...prevTaskData,
-  //     upload: publicId,
-  //   }));
-  //   handleStatusChange(task_id);
-  //   console.log("Entre al useffect 2:", task_id);
-  // }, [publicId]);
+
+  const handleUploadSuccess = (newPublicId) => {
+    const updatedTask = {
+      ...taskData,
+      upload: newPublicId,
+    };
+    setTaskData(updatedTask);
+    setPublicId(newPublicId);
+    handleUpdateTask(task_id, updatedTask); // Llamar a handleUpdateTask aquí con el nuevo publicId
+  };
 
   const handleStatusChange = (task_id, e) => {
     const newStatus = e ? e.target.value : currentStatus;
     const updatedTask = {
       ...taskData,
       status: newStatus,
-      upload: publicId,
     };
     setCurrentStatus(newStatus);
+    setTaskData(updatedTask);
     handleUpdateTask(task_id, updatedTask);
     console.log("Entre al handleStatusChange:", task_id, e, updatedTask);
   };
@@ -177,6 +161,7 @@ console.log("taskdata:", taskData)
           <CloudinaryUploadWidget
             uwConfig={uwConfig}
             setPublicId={setPublicId}
+            onUploadSuccess={handleUploadSuccess}
           />
 
           <img
