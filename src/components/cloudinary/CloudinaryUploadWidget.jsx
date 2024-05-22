@@ -8,11 +8,9 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId, onUploadSuccess }) {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    // Check if the script is already loaded
     if (!loaded) {
       const uwScript = document.getElementById("uw");
       if (!uwScript) {
-        // If not loaded, create and load the script
         const script = document.createElement("script");
         script.setAttribute("async", "");
         script.setAttribute("id", "uw");
@@ -20,7 +18,6 @@ function CloudinaryUploadWidget({ uwConfig, setPublicId, onUploadSuccess }) {
         script.addEventListener("load", () => setLoaded(true));
         document.body.appendChild(script);
       } else {
-        // If already loaded, update the state
         setLoaded(true);
       }
     }

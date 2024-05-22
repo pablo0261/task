@@ -73,11 +73,13 @@ const deleteTask = (taskId) => {
 const updateTask = (taskId, newTaskData) => {
   return async (dispatch) => {
     try {
-       await axios.put(`${BASE_URL}/tasks/${taskId}`, newTaskData);
+      console.log("entre en updateTask de action")
+      await axios.put(`${BASE_URL}/tasks/${taskId}`, newTaskData);
       dispatch({
         type: UPDATE_TASK,
         payload: { ...newTaskData, task_id: taskId } 
       });
+      console.log(`${BASE_URL}/tasks/${taskId}`, newTaskData)
       Swal.fire({
         title: "Tarea actualizada con éxito",
         icon: "success",

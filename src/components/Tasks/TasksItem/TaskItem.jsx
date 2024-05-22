@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import { TasksContext } from "../../../views/myTasks/MyTasksView";
 import PropTypes from "prop-types";
 import styles from "./TaskItem.module.sass";
@@ -12,6 +12,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
 const TaskItem = ({ task }) => {
+  console.log("task:",task)
   const { task_id, title, description, user, status, upload } = task;
   const { handleUpdateTask, handleDeleteTask, admin } =
     useContext(TasksContext);
@@ -60,14 +61,15 @@ console.log("taskdata:", taskData)
   // }, [taskData.upload]);
 
 
-  const handleUploadSuccess = (newPublicId) => {
+  const onUploadSuccess = (newPublicId) => {
     const updatedTask = {
       ...taskData,
       upload: newPublicId,
     };
     setTaskData(updatedTask);
     setPublicId(newPublicId);
-    handleUpdateTask(task_id, updatedTask); // Llamar a handleUpdateTask aquí con el nuevo publicId
+    console.log("estoy en handleUploadSuccess")
+    handleUpdateTask(task_id, updatedTask); 
   };
 
   const handleStatusChange = (task_id, e) => {
@@ -161,7 +163,7 @@ console.log("taskdata:", taskData)
           <CloudinaryUploadWidget
             uwConfig={uwConfig}
             setPublicId={setPublicId}
-            onUploadSuccess={handleUploadSuccess}
+            onUploadSuccess={onUploadSuccess}
           />
 
           <img
