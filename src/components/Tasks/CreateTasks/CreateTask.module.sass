@@ -14,15 +14,12 @@
   z-index: 1
 
 .blurBackground 
-  display: flex
-  position: absolute
-  align-items: center
-  justify-content: center
+  display: fixed
   top: 0
   left: 0
   width: 100%
   height: 100%
-  backdrop-filter: blur(5px)
+  backdrop-filter: blur(10px)
   background-color: rgba(0, 0, 0, 0.5)
   z-index: 2
 
@@ -30,14 +27,14 @@
   display: flex
   flex-direction: column
   font-family: $font-primary
-  position: absolute
+  position: relative
   width: 25%
   height: fit-content
   background-color: $sistemColor
   padding: 4%
   border-radius: 10px
   box-shadow: 0px 0px 10px $secondaryColor
-  z-index: 5
+  z-index: 3
 
 .iconClose
   display: flex

@@ -6,6 +6,8 @@ import editIcon from "../../../images/iconEdit4.png";
 import EditTaskForm from "../../Tasks/EditTasks/EditTasks";
 import iconoDelete from "../../../images/iconDelete2.png";
 import enlargeIcon from "../../../images/enlargeIcon.png";
+import fileIcon from "../../../images/fileIcon.png";
+import downloadIcon from "../../../images/downloadIcon.png";
 import decreaseIcon from "../../../images/decreaseIcon.png";
 import CloudinaryUploadWidget from "../../cloudinary/CloudinaryUploadWidget.jsx";
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -32,10 +34,11 @@ console.log("taskdata:", taskData)
   //*-------CLOUDINARY---------//
 
   const [publicId, setPublicId] = useState(upload);
+  const [url, setUrl] = useState();
   const [cloudName] = useState("hzxyensd5");
   const [uploadPreset] = useState("aoh4fpwm");
   console.log("publicId:", publicId);
-
+const [iconBlur, setIconBlur] = useState(false)
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
@@ -55,11 +58,6 @@ console.log("taskdata:", taskData)
     setCurrentStatus(task.status);
     setTaskData(task);
   }, [task]);
-
-  // useEffect(() => {
-  //   setPublicId(taskData.upload);
-  // }, [taskData.upload]);
-
 
   const onUploadSuccess = (newPublicId) => {
     const updatedTask = {
@@ -82,6 +80,17 @@ console.log("taskdata:", taskData)
     setTaskData(updatedTask);
     handleUpdateTask(task_id, updatedTask);
     console.log("Entre al handleStatusChange:", task_id, e, updatedTask);
+  };
+
+  const fileDownload = () => {
+    const downloadUrl = `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment/${publicId}.png`;
+
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = publicId.split('/').pop();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const toggleFormVisibility = () => {
@@ -112,6 +121,7 @@ console.log("taskdata:", taskData)
     color: "#fff",
   };
 
+
   return (
     <div
       key={task_id}
@@ -138,6 +148,15 @@ console.log("taskdata:", taskData)
         </div>
         <div className={styles.description}>
           <p>{taskData.description}</p>{" "}
+          {taskData.upload && (
+          <img
+              className={styles.fileOn}
+              src={iconBlur? downloadIcon : fileIcon}
+              alt={"file"}
+              onMouseEnter={() => setIconBlur(true)}
+              onMouseLeave={() => setIconBlur(false)}
+              onClick={() => fileDownload(task_id)}
+            />)}
         </div>
       </div>
 
@@ -160,11 +179,14 @@ console.log("taskdata:", taskData)
       </select>
       {admin && (
         <div className={styles.divButton}>
+          <div className={styles.cloudinaryButton}>
           <CloudinaryUploadWidget
             uwConfig={uwConfig}
             setPublicId={setPublicId}
+            setUrl={setUrl}
             onUploadSuccess={onUploadSuccess}
           />
+          </div>
 
           <img
             className={styles.iconDelete}

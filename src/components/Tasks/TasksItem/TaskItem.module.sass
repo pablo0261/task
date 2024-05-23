@@ -33,7 +33,6 @@
   display: flex
 
 
-
 .title
   color: $secondaryColor
   font-size: 28px
@@ -64,6 +63,20 @@
   max-height: 1em
   overflow: hidden
   transition: max-height 0.5s ease
+
+.fileOn
+  position: relative
+  height: 30px
+  padding: 3px
+  border-radius: 50%
+  cursor: pointer
+  z-index: 1
+  transition: background-color 0.3s ease
+  &:hover 
+    background-color: $yellowColor
+  &:active 
+    background-color: rgba($yellowColor, 0.7)
+    transform: scale(0.95)  
 
 .taskItem.expanded .description
   max-height: none
