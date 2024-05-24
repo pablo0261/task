@@ -9,7 +9,6 @@ import { jwtDecode } from "jwt-decode";
 import { getTask, getUsers, addTask, deleteTask, updateTask } from '../../redux/actions/actions'; 
 
 export const TasksContext = createContext();
-
 export const useTasks = () => useContext(TasksContext);
 
 const MyTasks = () => {
@@ -44,7 +43,6 @@ const MyTasks = () => {
       dispatch(addTask(newTaskData)); 
       setshowCreateForm(false);
     } catch (error) {
-      console.error("Error al crear la tarea:", error);
       Swal.fire({
         icon: "error",
         title: "Error al crear la tarea",
@@ -57,7 +55,6 @@ const MyTasks = () => {
     try {
       dispatch(deleteTask(taskId)); 
     } catch (error) {
-      console.error("Error al eliminar la tarea:", error);
       Swal.fire({
         icon: "error",
         title: "Error al eliminar la tarea",
@@ -68,10 +65,8 @@ const MyTasks = () => {
 
   const handleUpdateTask = (taskId, updatedTask) => {
     try {
-      console.log("entre al handleUpdateTask:",taskId, updatedTask)
       dispatch(updateTask(taskId, updatedTask)); // Llama a la acción del Redux para actualizar la tarea
     } catch (error) {
-      console.error("Error al actualizar la tarea:", error);
       Swal.fire({
         icon: "error",
         title: "Error al actualizar la tarea",

@@ -14,7 +14,6 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
 
 const TaskItem = ({ task }) => {
-  console.log("task:",task)
   const { task_id, title, description, user, status, upload } = task;
   const { handleUpdateTask, handleDeleteTask, admin } =
     useContext(TasksContext);
@@ -30,15 +29,11 @@ const TaskItem = ({ task }) => {
     upload: upload,
   });
   const name = task.user?.username || "Unknown";
-console.log("taskdata:", taskData)
-  //*-------CLOUDINARY---------//
-
   const [publicId, setPublicId] = useState(upload);
   const [url, setUrl] = useState();
   const [cloudName] = useState("hzxyensd5");
   const [uploadPreset] = useState("aoh4fpwm");
-  console.log("publicId:", publicId);
-const [iconBlur, setIconBlur] = useState(false)
+  const [iconBlur, setIconBlur] = useState(false);
   const [uwConfig] = useState({
     cloudName,
     uploadPreset,
@@ -52,8 +47,6 @@ const [iconBlur, setIconBlur] = useState(false)
 
   const myImage = cld.image(publicId);
 
-  //*-------HASTA AQUI CLOUDINARY---------//
-
   useEffect(() => {
     setCurrentStatus(task.status);
     setTaskData(task);
@@ -66,8 +59,7 @@ const [iconBlur, setIconBlur] = useState(false)
     };
     setTaskData(updatedTask);
     setPublicId(newPublicId);
-    console.log("estoy en handleUploadSuccess")
-    handleUpdateTask(task_id, updatedTask); 
+    handleUpdateTask(task_id, updatedTask);
   };
 
   const handleStatusChange = (task_id, e) => {
@@ -79,15 +71,14 @@ const [iconBlur, setIconBlur] = useState(false)
     setCurrentStatus(newStatus);
     setTaskData(updatedTask);
     handleUpdateTask(task_id, updatedTask);
-    console.log("Entre al handleStatusChange:", task_id, e, updatedTask);
   };
 
   const fileDownload = () => {
     const downloadUrl = `https://res.cloudinary.com/${cloudName}/image/upload/fl_attachment/${publicId}.png`;
 
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = downloadUrl;
-    link.download = publicId.split('/').pop();
+    link.download = publicId.split("/").pop();
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -117,10 +108,9 @@ const [iconBlur, setIconBlur] = useState(false)
   };
 
   const selectStyle = {
-    backgroundColor: getStatusColor(currentStatus), // Cambia el fondo
+    backgroundColor: getStatusColor(currentStatus), 
     color: "#fff",
   };
-
 
   return (
     <div
@@ -149,14 +139,15 @@ const [iconBlur, setIconBlur] = useState(false)
         <div className={styles.description}>
           <p>{taskData.description}</p>{" "}
           {taskData.upload && (
-          <img
+            <img
               className={styles.fileOn}
-              src={iconBlur? downloadIcon : fileIcon}
+              src={iconBlur ? downloadIcon : fileIcon}
               alt={"file"}
               onMouseEnter={() => setIconBlur(true)}
               onMouseLeave={() => setIconBlur(false)}
               onClick={() => fileDownload(task_id)}
-            />)}
+            />
+          )}
         </div>
       </div>
 
@@ -180,12 +171,13 @@ const [iconBlur, setIconBlur] = useState(false)
       {admin && (
         <div className={styles.divButton}>
           <div className={styles.cloudinaryButton}>
-          <CloudinaryUploadWidget
-            uwConfig={uwConfig}
-            setPublicId={setPublicId}
-            setUrl={setUrl}
-            onUploadSuccess={onUploadSuccess}
-          />
+            <CloudinaryUploadWidget
+              id={task_id}
+              uwConfig={uwConfig}
+              setPublicId={setPublicId}
+              setUrl={setUrl}
+              onUploadSuccess={onUploadSuccess}
+            />
           </div>
 
           <img
